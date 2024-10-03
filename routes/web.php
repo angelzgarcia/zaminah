@@ -13,3 +13,4 @@ Route::controller(HomeController::class) -> group(function(){
 
 Route::get('/',  HomeController::class);
 
+Route::get('/dashboard', [HomeController::class, 'adminDashboard']);

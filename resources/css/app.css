@@ -1,11 +1,10 @@
 
-body, html, .main-container {
+body, html, .main-container, .main-admin-container {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     min-width: 100%;
     min-height: 100vh;
-    /* background-color: blueviolet; */
 }
 
 .body-users { padding-top: 1em; }
@@ -136,6 +135,126 @@ footer {
                 width: 30px;
                 height: 30px;
             }
+        }
+    }
+}
+
+/* HOME / INDEX */
+.home-container {
+    min-width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 2em 0;
+    /* justify-content: center; */
+    align-items: center;
+    & .estados-home, .zonas-home, .culturas-home {
+        width: 90%;
+        min-height: 80vh;
+        margin: auto;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        display: flex;
+        align-items: center;
+        & h2 {
+            text-transform: uppercase;
+            font-size: 2em;
+            padding: 1em;
+            color: #fff;
+            text-shadow: 0 0 .2em gray;
+            /* letter-spacing: .1em; */
+            word-spacing: .1em;
+            font-weight: bolder;
+        }
+    }
+    & .estados-home {
+        border-radius: 1em 1em 0 0;
+        background-image:
+        linear-gradient(
+            rgba(0,0,0,0.1) 100%,
+            rgba(0,0,0,0.0)
+        ), url(../../public/img/uploads/miranda-garside-aaGej_rGBpQ-unsplash.jpg);
+    }
+    & .zonas-home {
+        background-position: center 90%;
+        background-image:
+        linear-gradient(
+            rgba(0,0,0,0.1) 100%,
+            rgba(0,0,0,0.0)
+        ), url(../../public/img/uploads/marv-watson-UfK0P6WygEE-unsplash.jpg);
+    }
+    & .culturas-home {
+        border-radius: 0 0 1em 1em;
+        background-image:
+        linear-gradient(
+            rgba(0,0,0,0.1) 100%,
+            rgba(0,0,0,0.0)
+        ), url(../../public/img/uploads/julie-sd-Ae3iebFg524-unsplash.jpg);
+    }
+}
+
+.sidebar-section {
+    min-height: inherit;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    /* padding: 1em 0; */
+    background-color: #a3856a;
+    & hr {
+        width: 80%;
+        padding: 0;
+        margin: 0 auto;
+    }
+    & .sidebar-header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1em;
+        & h1 {
+            color: #111;
+            font-weight: bolder;
+            font-size: 2em;
+            letter-spacing: .1em;
+            text-shadow: 0 0 .09em black;
+        }
+        & img {
+            width: 40px;
+            height: 40px;
+        }
+    }
+    & .dashboard-hamburger {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        padding: 0 1em;
+        gap: 1em;
+        color: #fff;
+        & span {
+            font-weight: bolder;
+            letter-spacing: .4em;
+            cursor: pointer;
+        }
+    }
+    & .menu-tablas {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: start;
+        padding: 0 2em;
+        & h3 {
+            margin-top: 0;
+            margin-bottom: 2em;
+            font-size: .8em;
+            color: #ffffff7c;
+        }
+        & .tables-link {
+            display: flex;
+            flex-direction: column;
+            color: #fff;
+            gap: 2em;
+            font-style: oblique;
         }
     }
 }
