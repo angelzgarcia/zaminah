@@ -5,6 +5,7 @@ body, html, .main-container, .main-admin-container {
     box-sizing: border-box;
     min-width: 100%;
     min-height: 100vh;
+    /* background-color: #111; */
 }
 
 .body-users { padding-top: 1em; }
@@ -18,7 +19,8 @@ body, html, .main-container, .main-admin-container {
         width: inherit;
         height: inherit;
         border-radius: 1em;
-        background-color: #a3856a;
+        /* background-color: #a3856a; */
+        background-color: #816954;
         display: flex;
         justify-content: space-between;
         padding-right: 3em;
@@ -38,7 +40,8 @@ body, html, .main-container, .main-admin-container {
                     padding: .5em 1em;
                     width: 100%;
                     text-decoration: none;
-                    color: #111;
+                    /* color: #111; */
+                    color: #fff ;
                     &:hover{
                         background-color: antiquewhite;
                         border-radius: .5em;
@@ -169,18 +172,18 @@ footer {
         }
     }
     & .estados-home {
-        border-radius: 1em 1em 0 0;
         background-image:
         linear-gradient(
-            rgba(0,0,0,0.1) 100%,
+            rgba(0,0,0,0.5) 100%,
             rgba(0,0,0,0.0)
-        ), url(../../public/img/uploads/miranda-garside-aaGej_rGBpQ-unsplash.jpg);
-    }
+            ), url(../../public/img/uploads/miranda-garside-aaGej_rGBpQ-unsplash.jpg);
+        }
     & .zonas-home {
+        border-radius: 1em 1em 0 0;
         background-position: center 90%;
         background-image:
         linear-gradient(
-            rgba(0,0,0,0.1) 100%,
+            rgba(0,0,0,0.5) 100%,
             rgba(0,0,0,0.0)
         ), url(../../public/img/uploads/marv-watson-UfK0P6WygEE-unsplash.jpg);
     }
@@ -188,7 +191,7 @@ footer {
         border-radius: 0 0 1em 1em;
         background-image:
         linear-gradient(
-            rgba(0,0,0,0.1) 100%,
+            rgba(0,0,0,0.5) 100%,
             rgba(0,0,0,0.0)
         ), url(../../public/img/uploads/julie-sd-Ae3iebFg524-unsplash.jpg);
     }
@@ -255,6 +258,23 @@ footer {
             color: #fff;
             gap: 2em;
             font-style: oblique;
+            & details summary {
+                cursor: pointer;
+                width: max-content;
+                list-style-type: none;
+                &::after {
+                    content: ' >';
+
+                }
+            }
         }
+    }
+    & .acceso-tablas {
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        gap: 1em;
+        padding: 0 2em;
+        color: #fff;
     }
 }
