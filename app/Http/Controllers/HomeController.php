@@ -8,11 +8,9 @@ class HomeController extends Controller
 {
 
     public function __invoke() {
-        return view('home');
+        return view('user.home-users');
     }
 
-    public function adminDashboard() {
-        return view('layouts.admin');
-    }
+
 
 }

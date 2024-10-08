@@ -1,9 +1,9 @@
 
-@extends('layouts.users')
+@extends('layouts.main')
 
 @section('titulo', 'INAH | Zonas Arqueológicas de México')
 
-@section('home-content')
+@section('users-content')
 
     <div class="home-container">
         <div class="zonas-home">

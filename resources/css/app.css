@@ -1,12 +1,15 @@
 
-body, html, .main-container, .main-admin-container {
+body, html, .main-container {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     min-width: 100%;
     min-height: 100vh;
-    /* background-color: #111; */
+    scrollbar-width: thin;
+    scrollbar-color: #ccbcae #9b7c62;
 }
+
+/* h1, h2, h3 { padding: 0; margin: 0; } */
 
 .body-users { padding-top: 1em; }
 
@@ -55,11 +58,11 @@ body, html, .main-container, .main-admin-container {
                 justify-content: center;
                 width: 40px;
                 height: 40px;
-                background-color: antiquewhite;
+                /* background-color: antiquewhite; */
                 border-radius: 50%;
                 & a {
                     border-radius: 50%; display: flex; justify-content: center; align-items: center; width: inherit; height: inherit;
-                    & svg { fill: #111; width: 100%; height: 100%;}
+                    & svg { fill: #fff; width: 100%; height: 100%;}
                 }
             }
 
@@ -197,14 +200,22 @@ footer {
     }
 }
 
+/* SIDEBAR ADMIN */
 .sidebar-section {
-    min-height: inherit;
+    height: 100vh;
     width: 250px;
     display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
     flex-direction: column;
     gap: 1em;
-    /* padding: 1em 0; */
-    background-color: #a3856a;
+    background-color: #9b7c62;
+    padding-bottom: 1em;
+    z-index: 100000;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #ccbcae #9b7c62;
     & hr {
         width: 80%;
         padding: 0;
@@ -218,13 +229,13 @@ footer {
         & h1 {
             color: #111;
             font-weight: bolder;
-            font-size: 2em;
+            font-size: 2.2em;
             letter-spacing: .1em;
-            text-shadow: 0 0 .09em black;
+            /* text-shadow: 0 0 .09em black; */
         }
         & img {
-            width: 40px;
-            height: 40px;
+            width: 90%;
+            /* height: 40px; */
         }
     }
     & .dashboard-hamburger {
@@ -237,7 +248,6 @@ footer {
         & span {
             font-weight: bolder;
             letter-spacing: .4em;
-            cursor: pointer;
         }
     }
     & .menu-tablas {
@@ -258,23 +268,345 @@ footer {
             color: #fff;
             gap: 2em;
             font-style: oblique;
+            width: 100%;
             & details summary {
                 cursor: pointer;
-                width: max-content;
+                width: 100%;
                 list-style-type: none;
+                position: relative;
                 &::after {
-                    content: ' >';
-
+                    right: 5px;
+                    content: url(../../public/img/uploads/caret-right-solid.svg);
+                    position: absolute;
+                    width: 10px;
+                    height: 10px;
+                    transition: all .2s;
                 }
+                &:hover {
+                    color: #111;
+                }
+            }
+            & details[open] > summary {
+                color: #111;
+                /* font-weight: bolder; */
+                &::after {
+                    transform:  translateX(5px) translateY(2px) rotate(90deg);
+                }
+            }
+            & .tables-actions {
+                background-color: #fff;
+                box-shadow: 0 0 .5em rgba(0,0,0,0.2);
+                color: #111;
+                border-radius: .2em .9em .9em;
+                margin-top: .8em;
+                padding: .4em 1em;
+                display: flex;
+                flex-direction: column;
+                gap: .6em;
+                & span { text-transform: uppercase; color: #000000c4; font-size: .55em; letter-spacing: .2em; }
+                & a { font-size: .9em; display: block; color: #111; text-decoration: none; padding: .1em .5em; border-radius: .4em; &:hover { background-color: #f1e9e998; } }
             }
         }
     }
     & .acceso-tablas {
+        align-self: flex-end;
+        background-color: #725c48;
+        border-radius: .5em 0 0 .5em;
         display: flex;
         justify-content: start;
         align-items: center;
         gap: 1em;
-        padding: 0 2em;
+        padding: 0 2em 0 1em;
+        margin: 1em 0;
+        & a {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1em;
+            color: #fff;
+            width: max-content;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        &:hover {
+            background-color: #64503e;
+        }
+    }
+}
+
+/* DASHBOARD ADMIN */
+.main-admin-container {
+    width: calc(100% - 250px);
+    margin-left: 250px;
+    overflow: hidden;
+    min-height: 100vh;
+    position: relative;
+
+    /* NAV BAR ADMIN */
+    & .header-admin {
+        width: 100%;
+        & .navbar-admin {
+            width: inherit;
+            display: flex;
+            justify-content: end;
+            align-items: center;
+            gap: 2em;
+            & .welcome-respect { color: #c4baae; }
+            & .profile-acces-container {
+                /* background-color: #611232; */
+                border-radius: 2em 0 0 2em;
+                height: 9vh;
+                min-width: 20%;
+                display: flex;
+                padding: 0 1em;
+                align-items: center;
+                gap: 1em;
+                justify-content: space-around;
+                & h2 {
+                    text-transform: uppercase;
+                    margin: 0;
+                    color: #111;
+                    font-size: 1.3em;
+                }
+                & .avatar-admin  {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 50%;
+                    min-height: 30px;
+                    background-color: #611232;
+                    min-width: 30px;
+                    cursor: pointer;
+                    & svg {
+                        display: block;
+                        width: 30ox;
+                        height: 30px;
+                        fill: #fff;
+                    }
+                }
+            }
+        }
+    }
+
+    /* SIDEBAR INFO USER / ADMIN */
+    & .profile-info {
+        height: 100vh;
+        width: 40%;
+        text-align: center;
+        position: fixed;
+        top: 0;
+        right: 0;
+        background-color: #a3856a;
+        /* background-color: #611232; */
         color: #fff;
+        /* display: flex; */
+        transition: opacity 1s;
+        opacity: 0;
+        flex-direction: column;
+        z-index: 10000;
+        box-shadow: -1em 0 1em 0 rgba(0,0,0,0.2);
+        & .close-profile-info {
+            /* background-color: #64503e; */
+            width: max-content;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            left: 7px;
+            top: 7px;
+            cursor: pointer;
+            & svg {
+                width: 25px;
+                height: 25px;
+                fill: #64503e;
+            }
+        }
+        & .name-user-avatar {
+            flex-basis: 35%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding-top: 1em;
+            background-color: #fff;
+            & .avatar-user {
+                background-color: #a3856a;
+                border-radius: 50%;
+                min-width: 100px;
+                min-height: 100px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                & svg {
+                    fill: #fff;
+                }
+            }
+            & .name-user {
+                color: #111;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 1em;
+                position: relative;
+                & h2 {
+                    text-transform: uppercase;
+                }
+                &::before {
+                    position: absolute;
+                    content: '';
+                    left: -2em;
+                    background-color: #47c02eaf;
+                    border-radius: 50%;
+                    width: 10px;
+                    height: 10px;
+                }
+            }
+        }
+        & .info-user {
+            display: flex;
+            flex-direction: column;
+            /* flex-basis: 65%; */
+            & p {
+                font-style: italic;
+            }
+            & span {
+                font-style: normal;
+                display: block;
+                font-weight: bold;
+            }
+        }
+
+        & .options-user {
+            display: flex;
+            margin-top: auto;
+            justify-content: space-evenly;
+            & a svg {
+                fill: #fff;
+                width: 30px;
+                height: 30px;
+            }
+        }
+        & .inah {
+            display: block;
+            margin-top: auto;
+            letter-spacing: .3em;
+            justify-self: end;
+            font-size: x-small;
+            /* font-weight: bold; */
+            font-style: normal;
+        }
+    }
+
+}
+
+/* DASHBOARD CHILD VIEW  */
+.dashboard-container {
+    min-height: calc(100vh - 9vh);
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(365px, 1fr));
+    grid-template-rows: repeat(auto-fill, minmax(100px, 1fr));
+    /* grid-template-rows: auto; */
+    gap: 2em 1em;
+    padding: 2em 0;
+    justify-content: center;
+    justify-items: center;
+
+    & .registers-tables-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: baseline;
+        align-items: center;
+        width: 70%;
+        background-color: #fff;
+        border-radius: 3em;
+        box-shadow: 0 0 .5em rgba(0,0,0,0.3);
+        color: #111111dc;
+        text-align: center;
+        overflow: hidden;
+        transition: all .2s ease;
+        text-decoration: none;
+        & h3 {
+            text-transform: uppercase;
+            width: 90%;
+            margin-bottom: 0;
+            font-size: 1.2em;
+            text-overflow: ellipsis;
+        }
+        & h4 {
+            font-style: italic;
+            font-size: small;
+        }
+
+        &:hover {
+            background-color: #f7f2f2;
+            /* transform: scale(105%); */
+        }
+    }
+}
+
+/* SECCION DATABSE ADMIN */
+.searcher-container {
+    display: flex;
+    justify-content: end;
+    padding: 1em 3em;
+    /* background-color: #000000c4; */
+    & form {
+        width: 320px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: .5em;
+        /* & fieldset {
+            border-radius: 2em;
+            position: relative;
+            padding: 0;
+            & legend {
+                margin-left: 80%;
+                width: max-content;
+                position: absolute;
+                top: -10px;
+                right: 0;
+                background-color: #fff;
+                } */
+                /* background-color: #000000b6; */
+                /* position: relative;
+                top: -10px; */
+                /* padding: 1em; */
+        & input {
+            color: #111;
+            /* background-color: #611232; */
+            box-shadow: 0 .2em .2em 0 rgba(0,0,0,0.5);
+            width: 100%;
+            border-radius: 2em;
+            height: 100%;
+            letter-spacing: .2em;
+            text-align: center;
+            outline: none;
+            /* border-color: #fff; */
+            border: none;
+        }
+        & button {
+            display: block;
+            width: 80px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: .6em 1em;
+            background-color: #611232;
+            border-radius: 3em;
+            outline: none;
+            border: none;
+            cursor: pointer;
+            & svg {
+                width: 21px;
+                height: 21px;
+                fill: #fff;
+            }
+            &:hover {
+                background-color: #500d28;
+            }
+        }
     }
 }

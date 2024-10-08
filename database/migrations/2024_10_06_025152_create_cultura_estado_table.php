@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cultura_estado', function (Blueprint $table) {
+            $table -> id('idCulturaEstado');
             $table -> unsignedInteger('idCultura');
             $table -> unsignedInteger('idEstadoRepublica');
             $table -> primary(['idCultura', 'idEstadoRepublica']);

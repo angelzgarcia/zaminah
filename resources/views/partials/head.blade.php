@@ -6,5 +6,6 @@
     <link rel="icon" href="{{ asset('favicon.ico') }}">
     @vite('resources/css/app.css')
     @vite('resources/js/app.js')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>@yield('titulo')</title>
 </head>
