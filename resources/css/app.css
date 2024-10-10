@@ -226,6 +226,7 @@ footer {
         justify-content: center;
         align-items: center;
         gap: 1em;
+        padding: 2em;
         & h1 {
             color: #111;
             font-weight: bolder;
@@ -233,9 +234,11 @@ footer {
             letter-spacing: .1em;
             /* text-shadow: 0 0 .09em black; */
         }
-        & img {
-            width: 90%;
-            /* height: 40px; */
+
+        & a img {
+            /* padding: 2em; */
+            /* background-color: #000000c4; */
+            width: 100%;
         }
     }
     & .dashboard-hamburger {
@@ -340,6 +343,7 @@ footer {
     margin-left: 250px;
     overflow: hidden;
     min-height: 100vh;
+    padding-bottom: 2em;
     position: relative;
 
     /* NAV BAR ADMIN */
@@ -351,6 +355,7 @@ footer {
             justify-content: end;
             align-items: center;
             gap: 2em;
+            background-color: #611232;
             & .welcome-respect { color: #c4baae; }
             & .profile-acces-container {
                 /* background-color: #611232; */
@@ -365,7 +370,7 @@ footer {
                 & h2 {
                     text-transform: uppercase;
                     margin: 0;
-                    color: #111;
+                    color: #fff;
                     font-size: 1.3em;
                 }
                 & .avatar-admin  {
@@ -391,7 +396,7 @@ footer {
     /* SIDEBAR INFO USER / ADMIN */
     & .profile-info {
         height: 100vh;
-        width: 40%;
+        width: 35%;
         text-align: center;
         position: fixed;
         top: 0;
@@ -421,6 +426,9 @@ footer {
                 height: 25px;
                 fill: #64503e;
             }
+            &:hover svg{
+                fill: #554435;
+            }
         }
         & .name-user-avatar {
             flex-basis: 35%;
@@ -430,6 +438,7 @@ footer {
             align-items: center;
             padding-top: 1em;
             background-color: #fff;
+            border-radius: 0 0 0 4em;
             & .avatar-user {
                 background-color: #a3856a;
                 border-radius: 50%;
@@ -467,6 +476,7 @@ footer {
             display: flex;
             flex-direction: column;
             /* flex-basis: 65%; */
+            justify-content: center;
             & p {
                 font-style: italic;
             }
@@ -481,10 +491,19 @@ footer {
             display: flex;
             margin-top: auto;
             justify-content: space-evenly;
+            display: flex;
+            align-items: center;
+            height: 100%;
+            /* background-color: #000000c4; */
+            /* height: auto; */
             & a svg {
                 fill: #fff;
                 width: 30px;
                 height: 30px;
+                transition: all .2s;
+                &:hover {
+                    transform: scale(107%);
+                }
             }
         }
         & .inah {
@@ -545,11 +564,11 @@ footer {
     }
 }
 
-/* SECCION DATABSE ADMIN */
+/* BUSCADOR ADMIN */
 .searcher-container {
     display: flex;
     justify-content: end;
-    padding: 1em 3em;
+    padding: 1.2em 3em 0;
     /* background-color: #000000c4; */
     & form {
         width: 320px;
@@ -606,6 +625,85 @@ footer {
             }
             &:hover {
                 background-color: #500d28;
+            }
+        }
+    }
+}
+
+/* SECCION DATABSE ADMIN */
+.database-section {
+    /* background-color: #000000c4; */
+    display: flex;
+    flex-direction: column;
+    padding: 0 2em;
+    & h1 {
+        letter-spacing: .3em;
+        color: #c4baae;
+        font-size: 2em;
+        font-style: italic;
+        text-transform: uppercase;
+    }
+    & h2 {
+        font-size: 1em;
+        color: #111;
+    }
+    & .tables-preview-container {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        gap: 2em;
+        & .table-preview {
+            display: flex;
+            flex-direction: column;
+            border-bottom: 1px solid #c4baae;
+            & .table-header {
+                background-color: #d9d9d9;
+                height: 30px;
+                box-shadow: 0 .2em .1em rgba(99, 97, 97, 0.7);
+                border-radius: .5em;
+            }
+            & .table-access {
+                display: flex;
+                /* align-items: center; */
+                /* height: 40%; */
+                justify-content: space-around;
+                & .table-name {
+                    display: flex;
+                    align-items: center;
+                    flex-basis: 60%;
+                    padding-left: 1em;
+                    /* height: 50%; */
+                    margin: .7em 0;
+                    /* background-color: #000000c4; */
+                    border-right: 1px solid #c4baae;
+                    & a {
+                        text-transform: lowercase;
+                        text-decoration: none;
+                    }
+                }
+                & .table-actions {
+                    display: flex;
+                    gap: 1em;
+                    padding: 1em;
+                    flex-basis: 40%;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    justify-content: space-around;
+                    & a {
+                        text-decoration: none;
+                        color: #111;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        gap: .5em;
+                        color: #551a8b;
+                        & svg {
+                            fill: goldenrod;
+                            width: 15px;
+                            height: 15px;
+                        }
+                    }
+                }
             }
         }
     }

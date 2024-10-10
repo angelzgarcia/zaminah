@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rol', function (Blueprint $table) {
+        Schema::create('roles', function (Blueprint $table) {
             $table -> id('idRol');
             $table -> enum('tipo', ['administrador', 'usuario']);
             $table -> timestamps();

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('resenia', function (Blueprint $table) {
+        Schema::create('resenias', function (Blueprint $table) {
             $table->id('idResenia');
             $table -> string('mensaje');
             $table -> unsignedTinyInteger('puntuacion');

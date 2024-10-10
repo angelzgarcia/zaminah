@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ubicacion', function (Blueprint $table) {
+        Schema::create('ubicaciones', function (Blueprint $table) {
             $table->id('idUbicacion');
             $table -> decimal('latitud', 6, 3);
             $table -> decimal('longitud', 6, 3);
