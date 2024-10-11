@@ -2,7 +2,7 @@
 
 <header class="header-users">
     <nav class="nav-users">
-        <img src="{{asset('img/uploads/logo_85.png')}}" alt="logo-85">
+        <img src="{{ img_d_url('logo_85.png') }}" alt="logo-85">
         <div class="links-nav">
             <ul>
                 <li>

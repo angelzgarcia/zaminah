@@ -1,5 +1,4 @@
 
-
 <footer>
     <div class="enalces">
         <div class="links-foot">
@@ -10,7 +9,8 @@
             <a href="">INAI</a>
             <a href="">Denuncia</a>
         </div>
-        <img src="{{asset('img/uploads/logo_blanco.svg')}}" alt="logo-gobierno-de-mexico">
+        {{-- asset entra a la URL publica, a la carpeta public del proyecto --}}
+        <img src="{{ img_d_url('logo_blanco.svg') }}" alt="logo-gobierno-de-mexico">
     </div>
 
     <div class="contactos">
@@ -29,7 +29,7 @@
                 <strong><a href="">ollincode.com.mx</a></strong>
             </div>
         </div>
-        <img src="{{asset('img/uploads/gmx-043-removebg-preview.png')}}" alt="logo">
+        <img src="{{ img_d_url('gmx-043-removebg-preview.png') }}" alt="logo">
     </div>
 
     <div class="termCond">

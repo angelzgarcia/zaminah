@@ -2,6 +2,12 @@
 
 return [
 
+    'imgsD_path' => 'storage/img/downloads/',
+
+    'imgsU_path' => 'storage/img/uploads/',
+
+    'imgsA_path' => 'storage/img/avatars/',
+
     /*
     |--------------------------------------------------------------------------
     | Application Name

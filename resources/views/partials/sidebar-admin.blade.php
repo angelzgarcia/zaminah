@@ -4,7 +4,7 @@
     <div class="sidebar-header">
         {{-- <h1>INAH</h1> --}}
         <a href="{{route('home')}}">
-            <img src="{{asset('img/uploads/logo_inah.png')}}" alt="logo">
+            <img src="{{asset('storage/img/uploads/logo_inah.png')}}" alt="logo">
         </a>
     </div>
     <hr>
