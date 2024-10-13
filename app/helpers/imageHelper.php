@@ -10,7 +10,7 @@ if (!function_exists('img_d_url')) {
 
 if (!function_exists('img_u_url')) {
     function img_u_url ($filename) {
-        return asset('storage/img/uploads/'.$filename);
+        return asset('storage/img/uploads/'.$filename); 
     }
 }
 

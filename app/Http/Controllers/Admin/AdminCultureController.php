@@ -37,8 +37,9 @@ class AdminCultureController extends Controller
         $cultura -> periodo = $request -> periodo;
         $cultura -> significado = $request -> significado;
         $cultura -> descripcion = $request -> descripcion;
-        if ($request -> hash_file('foto'))
-            $cultura -> foto = basename($request -> file('foto') -> store('public/img/uploads'));
+        if ($request->hasFile('foto'))
+            $cultura -> foto = basename($request -> file('foto')->store('img/uploads', 'public'));
+        else return "No se recibió ninguna imagen.";
 
         $cultura -> aportaciones = $request -> aportaciones;
 
@@ -62,7 +63,9 @@ class AdminCultureController extends Controller
      */
     public function edit($id)
     {
-        return view('admin.culturas.edit', compact('id'));
+        $cultura = Cultura::where('idCultura', $id) -> first();
+
+        return view('admin.culturas.edit', compact('cultura'));
     }
 
     /**

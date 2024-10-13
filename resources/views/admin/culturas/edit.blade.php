@@ -4,5 +4,7 @@
 @section('titulo', 'Editar | INAH | Admin')
 
 @section('admin-content')
-    <h1>VAS A EDITAR LA CULTURA <em><big>"{{$id}}"</big></em></h1>
+    <h2><a href="{{route('admin.cultures.index')}}">Volver a las culturas</a></h2>
+    <h1>VAS A EDITAR LA CULTURA <em><big>"{{$cultura->idCultura}}"</big></em></h1>
+    <img src="{{ img_u_url($cultura->foto) }}" alt="cultura">
 @endsection

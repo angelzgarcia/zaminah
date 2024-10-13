@@ -26,7 +26,7 @@ class StoreCulturaRequest extends FormRequest
             'periodo' => 'required|max:255',
             'significado' => 'required',
             'descripcion' => 'required',
-            'foto' => 'required|image|mimes:jpeg,jpg,png,gif',
+            'foto' => 'required|image|mimes:jpeg,jpg,png,gif,webp',
             'aportaciones' => 'required',
         ];
     }
