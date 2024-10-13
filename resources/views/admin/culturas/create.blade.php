@@ -5,6 +5,6 @@
 
 @section('admin-content')
 
-    <h1>AQUÍ SE VAN A PODER AGREGAR CULTURAS MUGROSO</h1>
+    <h1>AQUÍ SE VAN A PODER AGREGAR CULTURAS</h1>
 
 @endsection

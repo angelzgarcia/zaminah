@@ -13,16 +13,22 @@ return new class extends Migration
     {
         Schema::create('zonas', function (Blueprint $table) {
             $table->id('idZonaArqueologica');
-            $table -> string('nombre', 40);
+            $table -> string('nombre', 40) -> unique();
             $table -> binary('foto');
             $table -> string('significado'); //maximo 255 caractere
             $table -> text('descripcion');
             $table -> text('acceso');
-            $table -> string('horario', 100);
-            $table -> decimal('costoEntrada', 4, 2);
-            $table -> string('contacto', 100);
-            $table -> foreignId('idEstadoRepublica') -> constrained('estados_republica');
-            $table -> foreignId('idUbicacion') -> constrained('ubicaciones');
+            $table -> string('horario');
+            $table -> decimal('costoEntrada', 6, 2);
+            $table -> text('contacto');
+
+            // Si se elimina un estado, ubicacion o cultura todas las zonas asociadas a ellos deberian elimianrse:
+            $table -> foreignId('idEstadoRepublica')
+                    -> constrained('estados')
+                    -> onDelete('cascade');
+            $table -> foreignId('idCultura')
+                    -> constrained('culturas')
+                    -> onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -14,12 +14,11 @@ return new class extends Migration
         Schema::create('culturas', function (Blueprint $table) {
             $table->id('idCultura');
             $table -> string('nombre', 30) -> unique();
-            $table -> string('periodo', 50);
+            $table -> string('periodo', 60);
             $table -> string('significado');
             $table -> text('descripcion');
             $table -> binary('foto');
-            $table -> string('aportaciones');
-            $table -> foreignId('idEstadoRepublica') -> constrained('estados_republica');
+            $table -> text('aportaciones');
             $table->timestamps();
         });
     }

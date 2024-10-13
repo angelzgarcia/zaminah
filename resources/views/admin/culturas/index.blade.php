@@ -5,7 +5,15 @@
 
 @section('admin-content')
 
-    <h1>AQUÍ SE MOSTRARÁ LA TABLA DE LAS CULTURAS PERRO</h1>
+    @foreach ($culturas as $cultura)
+
+        <h1>{{$cultura->nombre}}</h1>
+
+    @endforeach
+
+    <div class="paginador">
+        {{$culturas->links()}}
+    </div>
 
 @endsection
 

@@ -7,6 +7,6 @@
 
 @section('admin-content')
 
-    <h1>HAZ BUSCADO LA CULTURA <em><big>"{{$id}}"</big></em> PIOJO DE PERRO</h1>
+    <h1>HAZ BUSCADO LA CULTURA <em><big>"{{$id}}"</big></em></h1>
 
 @endsection

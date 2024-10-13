@@ -17,10 +17,17 @@ class EstadoFactory extends Factory
     public function definition(): array
     {
         return [
-            'nombre'=> $this->faker->city(),
-            'capital'=> $this->faker->city(),
-            'foto' => $this->faker->image(storage_path('app/public/img/factories'), 640, 480, 'nature', false),
-            'video'=> $this->faker->url(),
+            'nombre'=> fake() -> unique() -> randomElement([
+                'Aguascalientes', 'Baja California', 'Baja California Sur', 'Campeche', 'Chiapas',
+                'Chihuahua', 'Ciudad de México', 'Coahuila', 'Colima', 'Durango', 'Guanajuato',
+                'Guerrero', 'Hidalgo', 'Jalisco', 'Estado de México', 'Michoacán', 'Morelos',
+                'Nayarit', 'Nuevo León', 'Oaxaca', 'Puebla', 'Querétaro', 'Quintana Roo',
+                'San Luis Potosí', 'Sinaloa', 'Sonora', 'Tabasco', 'Tamaulipas', 'Tlaxcala',
+                'Veracruz', 'Yucatán', 'Zacatecas'
+            ]),
+            'capital'=> fake() -> unique() -> city(),
+            'foto' => fake() -> image(storage_path('app/public/img/factories'), 640, 480, 'nature', false),
+            'video'=> fake() -> url(),
             'triptico'=> 'triptico.pdf',
             'guia'=> 'guia.pdf',
         ];

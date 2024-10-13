@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Cultura;
 
 class AdminCultureController extends Controller
 {
@@ -12,7 +13,9 @@ class AdminCultureController extends Controller
      */
     public function index()
     {
-        return view('admin.culturas.index');
+        $culturas = Cultura::paginate();
+        // return $culturas;
+        return view('admin.culturas.index', compact('culturas'));
     }
 
     /**

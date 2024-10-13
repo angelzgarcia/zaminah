@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('usuarios', function (Blueprint $table) {
             $table -> id('idUsuario');
-            $table -> unsignedBigInteger('google_id')->unique();
+            $table -> unsignedBigInteger('google_id') -> unique();
             $table -> string('nombre', 80);
             $table -> string('genero', 10);
             $table -> binary('foto');
-            $table -> string('email', 60)->unique();
-            $table -> unsignedBigInteger('numero')->unique();
+            $table -> string('email', 60) -> unique();
+            $table -> unsignedBigInteger('numero') -> unique();
             $table -> string('password', 20);
             $table -> string('token', 8);
             $table -> unsignedTinyInteger('confirmado');
