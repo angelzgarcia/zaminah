@@ -19,4 +19,4 @@ yarn-error.log
 /.idea
 /.vscode
 /.zed
-!storage/app/public/img
+# !storage/app/public/img
