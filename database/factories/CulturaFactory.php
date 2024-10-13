@@ -56,7 +56,7 @@ class CulturaFactory extends Factory
             'periodo' => fake() -> sentence(3, true),
             'significado' => fake() -> sentences(2, true),
             'descripcion' => fake() -> paragraphs(3, true),
-            'foto' => fake() -> image(storage_path('app/public/img/factories'), 640, 400, 'nature', false),
+            'foto' => fake() -> imageUrl(),
             'aportaciones' => fake() -> paragraph()
         ];
     }

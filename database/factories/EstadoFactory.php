@@ -26,7 +26,7 @@ class EstadoFactory extends Factory
                 'Veracruz', 'Yucatán', 'Zacatecas'
             ]),
             'capital'=> fake() -> unique() -> city(),
-            'foto' => fake() -> image(storage_path('app/public/img/factories'), 640, 480, 'nature', false),
+            'foto' => fake() ->  imageUrl(),
             'video'=> fake() -> url(),
             'triptico'=> 'triptico.pdf',
             'guia'=> 'guia.pdf',
