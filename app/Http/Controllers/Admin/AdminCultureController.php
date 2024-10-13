@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCulturaRequest;
 use Illuminate\Http\Request;
 use App\Models\Cultura;
 
@@ -13,7 +14,7 @@ class AdminCultureController extends Controller
      */
     public function index()
     {
-        $culturas = Cultura::paginate();
+        $culturas = Cultura::orderBy('idCultura', 'desc') -> paginate();
         // return $culturas;
         return view('admin.culturas.index', compact('culturas'));
     }
@@ -29,9 +30,21 @@ class AdminCultureController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreCulturaRequest $request)
     {
-        //
+        $cultura = new Cultura();
+        $cultura -> nombre = $request -> nombre;
+        $cultura -> periodo = $request -> periodo;
+        $cultura -> significado = $request -> significado;
+        $cultura -> descripcion = $request -> descripcion;
+        if ($request -> hash_file('foto'))
+            $cultura -> foto = basename($request -> file('foto') -> store('public/img/uploads'));
+
+        $cultura -> aportaciones = $request -> aportaciones;
+
+        $cultura -> save();
+
+        return redirect() -> route('admin.cultures.index') -> with('success', 'Cultura creada con éxito');
     }
 
     /**
@@ -39,7 +52,9 @@ class AdminCultureController extends Controller
      */
     public function show($id)
     {
-        return view('admin.culturas.show', compact('id'));
+        $cultura = Cultura::where('idCultura', $id) -> first();
+
+        return view('admin.culturas.show', compact('cultura'));
     }
 
     /**

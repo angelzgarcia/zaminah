@@ -7,7 +7,11 @@
 
     @foreach ($culturas as $cultura)
 
-        <h1>{{$cultura->nombre}}</h1>
+        <h1>
+            <span>{{$cultura->idCultura}}</span>
+            _
+            <a href="{{route('admin.cultures.show', $cultura->idCultura)}}">{{$cultura->nombre}}</a>
+        </h1>
 
     @endforeach
 

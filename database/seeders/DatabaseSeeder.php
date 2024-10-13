@@ -17,9 +17,9 @@ class DatabaseSeeder extends Seeder
 
         Estado::factory(32) -> create();
         Cultura::factory(34) -> create();
-        Zona::factory(190) -> create();
+        Zona::factory(171) -> create();
 
-        Ubicacion::factory(190) -> create();
+        Ubicacion::factory(171) -> create();
 
     }
 }
