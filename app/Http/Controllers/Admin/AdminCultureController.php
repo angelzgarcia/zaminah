@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCulturaRequest;
-use Illuminate\Http\Request;
+use App\Http\Requests\UpdateCultureRequest;
 use App\Models\Cultura;
+use Illuminate\Support\Facades\Storage;
 
 class AdminCultureController extends Controller
 {
@@ -16,7 +17,7 @@ class AdminCultureController extends Controller
     {
         $culturas = Cultura::orderBy('idCultura', 'desc') -> paginate();
         // return $culturas;
-        return view('admin.culturas.index', compact('culturas'));
+        return view('admin.cultures.index', compact('culturas'));
     }
 
     /**
@@ -24,7 +25,7 @@ class AdminCultureController extends Controller
      */
     public function create()
     {
-        return view('admin.culturas.create');
+        return view('admin.cultures.create');
     }
 
     /**
@@ -32,20 +33,21 @@ class AdminCultureController extends Controller
      */
     public function store(StoreCulturaRequest $request)
     {
-        $cultura = new Cultura();
-        $cultura -> nombre = $request -> nombre;
-        $cultura -> periodo = $request -> periodo;
-        $cultura -> significado = $request -> significado;
-        $cultura -> descripcion = $request -> descripcion;
-        if ($request->hasFile('foto'))
-            $cultura -> foto = basename($request -> file('foto')->store('img/uploads', 'public'));
-        else return "No se recibió ninguna imagen.";
+        $culture = new Cultura();
+        $culture -> nombre = $request -> nombre;
+        $culture -> periodo = $request -> periodo;
+        $culture -> significado = $request -> significado;
+        $culture -> descripcion = $request -> descripcion;
+        if ($request->hasFile('foto')) {
+            $culture -> foto = basename($request -> file('foto')->store('img/uploads', 'public'));
+        }
 
-        $cultura -> aportaciones = $request -> aportaciones;
+        $culture -> aportaciones = $request -> aportaciones;
 
-        $cultura -> save();
 
-        return redirect() -> route('admin.cultures.index') -> with('success', 'Cultura creada con éxito');
+        $culture -> save();
+
+        return redirect() -> route('admin.cultures.index');
     }
 
     /**
@@ -53,9 +55,9 @@ class AdminCultureController extends Controller
      */
     public function show($id)
     {
-        $cultura = Cultura::where('idCultura', $id) -> first();
+        $culture = Cultura::where('idCultura', $id) -> first();
 
-        return view('admin.culturas.show', compact('cultura'));
+        return view('admin.cultures.show', compact('culture'));
     }
 
     /**
@@ -63,17 +65,34 @@ class AdminCultureController extends Controller
      */
     public function edit($id)
     {
-        $cultura = Cultura::where('idCultura', $id) -> first();
+        $culture = Cultura::where('idCultura', $id) -> first();
 
-        return view('admin.culturas.edit', compact('cultura'));
+        return view('admin.cultures.edit', compact('culture'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateCultureRequest $request, $id)
     {
-        //
+        $culture = Cultura::where('idCultura', $id) -> first();
+
+        if ($request -> hasFile('foto')) {
+            $oldImage = $culture -> foto;
+            if ($oldImage && Storage::disk('public')->exists("img/uploads/{$oldImage}")) {
+                Storage::disk('public')->delete("img/uploads/{$oldImage}");
+            }
+            $culture -> foto = basename($request -> file('foto') -> store('img/uploads', 'public'));
+        }
+        $culture -> nombre = $request -> nombre;
+        $culture -> periodo = $request -> periodo;
+        $culture -> significado  = $request -> significado;
+        $culture -> descripcion = $request -> descripcion;
+        $culture -> aportaciones = $request -> aportaciones;
+
+        $culture -> update();
+
+        return redirect() -> route('admin.cultures.show', $culture->idCultura);
     }
 
     /**

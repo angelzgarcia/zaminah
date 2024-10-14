@@ -10,6 +10,8 @@ class Cultura extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'idCultura';
+
     // MUTADORES Y ACCESORES
     protected function nombre(): Attribute {
         return new Attribute(
