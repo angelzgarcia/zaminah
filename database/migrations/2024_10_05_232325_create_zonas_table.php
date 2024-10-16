@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('zonas', function (Blueprint $table) {
             $table->id('idZonaArqueologica');
             $table -> string('nombre') -> unique();
-            $table -> binary('foto');
+            // $table -> binary('foto');
             $table -> string('significado'); //maximo 255 caractere
             $table -> text('descripcion');
             $table -> text('acceso');

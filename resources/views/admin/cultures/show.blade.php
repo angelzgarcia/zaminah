@@ -11,7 +11,10 @@
     <h2><a href="{{route('admin.cultures.edit', $culture->idCultura)}}">Editar</a></h2>
 
     <h1>HAZ BUSCADO LA CULTURA <em><big>{{$culture->idCultura}} | "{{$culture->nombre}}"</big></em></h1>
-    <img src="{{img_u_url($culture->foto)}}" alt="cultura">
     <p>{{$culture->descripcion}}</p>
+    @foreach ($culture->fotos as $foto)
+        <br>
+        <img src="{{ img_u_url($foto->foto)}}" width="300px" alt="cultura">
+    @endforeach
 
 @endsection

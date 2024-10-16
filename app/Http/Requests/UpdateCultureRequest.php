@@ -1,4 +1,5 @@
 <?php
+// FORM REQUEST ------ REGLAS DE VALIDACIONES
 
 namespace App\Http\Requests;
 
@@ -30,11 +31,18 @@ class UpdateCultureRequest extends FormRequest
                 'regex:/^[\pL\s]+$/u',
             ],
             'periodo' => 'required|max:255',
-            'significado' => 'required',
-            'descripcion' => 'required',
-            'foto' => 'nullable|image|mimes:jpeg,jpg,png,gif,webp',
+            'significado' => 'required|max:255',
+            'descripcion' => 'required|max:1500',
             'aportaciones' => 'required',
+            'imgs_actuales' => ''
         ];
     }
+
+    public function messages() {
+        return [
+            'significado' => ''
+        ];
+    }
+
 
 }

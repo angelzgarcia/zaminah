@@ -16,8 +16,8 @@ return new class extends Migration
             // $table -> unsignedInteger('idCultura');
             // $table -> unsignedInteger('idEstadoRepublica');
             // $table -> primary(['idCultura', 'idEstadoRepublica']);
-            $table -> foreignId('idCultura') -> constrained('culturas');
-            $table -> foreignId('idEstadoRepublica') -> constrained('estados');
+            $table -> foreignId('idCultura') -> constrained('culturas') -> onDelete('cascade');
+            $table -> foreignId('idEstadoRepublica') -> constrained('estados') -> onDelete('cascade');
 
         });
     }

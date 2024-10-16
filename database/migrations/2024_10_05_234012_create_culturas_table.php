@@ -17,7 +17,7 @@ return new class extends Migration
             $table -> string('periodo', 60);
             $table -> string('significado');
             $table -> text('descripcion');
-            $table -> binary('foto');
+            // $table -> binary('foto');
             $table -> text('aportaciones');
             $table->timestamps();
         });

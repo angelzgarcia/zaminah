@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('idResenia');
             $table -> string('mensaje');
             $table -> unsignedTinyInteger('puntuacion');
-            $table -> binary('foto');
+            // $table -> binary('foto');
             $table -> foreignId('idUsuario') -> constrained('usuario');
             $table -> foreignId('idZonaArqueologica') -> constrained('zonas_arqueologicas');
             $table->timestamps();

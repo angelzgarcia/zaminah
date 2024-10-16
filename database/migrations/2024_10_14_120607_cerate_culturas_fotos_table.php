@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('estados', function (Blueprint $table) {
-            $table -> id('idEstadoRepublica');
-            $table -> string('nombre', 30) ->unique();
-            $table -> string('capital', 30);
+        Schema::create('culturas_fotos', function(Blueprint $table) {
+            $table -> id('idCulturaFoto');
             $table -> string('foto');
-            $table -> string('video');
-            $table -> binary('triptico');
-            $table -> binary('guia');
+            $table -> foreignId('idCultura')
+                    -> constrained('culturas')
+                    -> onDelete('cascade');
             $table -> timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('estados');
+        Schema::dropIfExists('culturas_fotos');
     }
 };

@@ -16,7 +16,7 @@ return new class extends Migration
             $table -> unsignedBigInteger('google_id') -> unique();
             $table -> string('nombre', 80);
             $table -> string('genero', 10);
-            $table -> binary('foto');
+            $table -> string('foto');
             $table -> string('email', 60) -> unique();
             $table -> unsignedBigInteger('numero') -> unique();
             $table -> string('password', 20);

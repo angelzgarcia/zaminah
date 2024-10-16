@@ -12,6 +12,10 @@ class Cultura extends Model
 
     protected $primaryKey = 'idCultura';
 
+    public function fotos() {
+        return $this -> hasMany(CulturaImagen::class,'idCultura', 'idCultura');
+    }
+
     // MUTADORES Y ACCESORES
     protected function nombre(): Attribute {
         return new Attribute(
