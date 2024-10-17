@@ -23,7 +23,9 @@ return new class extends Migration
             $table -> string('token', 8);
             $table -> unsignedTinyInteger('confirmado');
             $table -> enum('status', ['activo', 'inactivo']);
-            $table -> foreignId('idRol') -> constrained('roles');
+            $table -> foreignId('idRol')
+                    -> constrained('roles', 'idRol')
+                    -> onDelete('cascade');
             $table -> timestamps();
         });
     }

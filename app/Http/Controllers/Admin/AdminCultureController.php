@@ -43,26 +43,28 @@ class AdminCultureController extends Controller
      */
     public function store(StoreCulturaRequest $request)
     {
+        // $culture = new Cultura();
+        // $culture -> nombre = $request -> nombre;
+        // $culture -> periodo = $request -> periodo;
+        // $culture -> significado = $request -> significado;
+        // $culture -> descripcion = $request -> descripcion;
+        // $culture -> aportaciones = $request -> aportaciones;
+        // $culture -> save();
         $culture = new Cultura();
-        $culture -> nombre = $request -> nombre;
-        $culture -> periodo = $request -> periodo;
-        $culture -> significado = $request -> significado;
-        $culture -> descripcion = $request -> descripcion;
-        $culture -> aportaciones = $request -> aportaciones;
-        $culture -> save();
+        $culture = Cultura::create($request -> all());
 
         $this->storeImg('fotos', $request, $culture);
 
-        return redirect() -> route('admin.cultures.index');
+        return redirect() -> route('admin.cultures.show', $culture);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Cultura $culture)
     {
         // $culture = Cultura::with('fotos') -> where('idCultura', $id) -> first();
-        $culture = Cultura::where('idCultura', $id) -> first();
+        // $culture = Cultura::where('idCultura', $id) -> first();
 
         if (!$culture)
             return redirect() -> route('admin.cultures.index');
@@ -73,9 +75,9 @@ class AdminCultureController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(Cultura $culture)
     {
-        $culture = Cultura::where('idCultura', $id) -> first();
+        // $culture = Cultura::where('idCultura', $id) -> first();
         $img_cnt = count($culture->fotos);
 
         if (!$culture)
@@ -87,22 +89,24 @@ class AdminCultureController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCultureRequest $request, $id)
+    public function update(UpdateCultureRequest $request, Cultura $culture)
     {
-        $culture = Cultura::where('idCultura', $id) -> first();
+        // $culture = Cultura::where('idCultura', $id) -> first();
+        $id = $culture -> idCultura;
 
-        $culture -> nombre = $request -> nombre;
-        $culture -> periodo = $request -> periodo;
-        $culture -> significado  = $request -> significado;
-        $culture -> descripcion = $request -> descripcion;
-        $culture -> aportaciones = $request -> aportaciones;
+        // $culture -> nombre = $request -> nombre;
+        // $culture -> periodo = $request -> periodo;
+        // $culture -> significado  = $request -> significado;
+        // $culture -> descripcion = $request -> descripcion;
+        // $culture -> aportaciones = $request -> aportaciones;
+        $culture -> update($request -> all());
 
         $to_eliminate_imgs = $request->to_eliminate_imgs;
         $current_imgs_dec = $request->current_imgs_dec;
         $new_imgs = $request -> new_imgs;
 
         // ACTUALIZAR FOTOS
-        if ($to_eliminate_imgs):
+        if ($current_imgs_dec):
             foreach ($current_imgs_dec as $hash_id => $id_unhash):
                 $hash_id_value = hash_img($id_unhash);
                 if ($hash_id != $hash_id_value):
@@ -118,7 +122,23 @@ class AdminCultureController extends Controller
             endforeach;
         endif;
 
-        
+
+        // AÑADIR MAS IMAGENES
+        if ($new_imgs):
+            $count_current_imgs = CulturaImagen::where('idCultura', $id) -> count();
+            $count_new_imgs = count($new_imgs);
+            // VALIDAR MAXIMO DE IMAGENES
+            if (($count_current_imgs > 3) || ($count_current_imgs + $count_new_imgs > 4)):
+                return redirect()
+                        -> back()
+                        -> withInput()
+                        -> withErrors(['new_imgs' => 'Solo se permiten 4 imagenes como máximo']);
+            else:
+                $this -> storeImg('new_imgs', $request, $culture);
+            endif;
+        endif;
+
+
         // ELIMINAR FOTOS
         if ($to_eliminate_imgs):
             $image = CulturaImagen::where('idCultura', $id) -> count();
@@ -145,24 +165,7 @@ class AdminCultureController extends Controller
             endif;
         endif;
 
-
-        // AÑADIR MAS IMAGENES
-        if ($new_imgs):
-            $count_current_imgs = CulturaImagen::where('idCultura', $id) -> count();
-            $count_new_imgs = count($new_imgs);
-            // VALIDAR MAXIMO DE IMAGENES
-            if (($count_current_imgs > 3) || ($count_current_imgs + $count_new_imgs > 4)):
-                return redirect()
-                        -> back()
-                        -> withInput()
-                        -> withErrors(['new_imgs' => 'Solo se permiten 4 imagenes como máximo']);
-            else:
-                $this -> storeImg('new_imgs', $request, $culture);
-            endif;
-        endif;
-
-
-        $culture -> update();
+        // $culture -> update();
 
         return redirect() -> route('admin.cultures.show', $culture->idCultura);
     }
@@ -170,8 +173,9 @@ class AdminCultureController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Cultura $culture)
     {
-        //
+        $culture -> delete();
+        return redirect() -> route('admin.cultures.index');
     }
 }

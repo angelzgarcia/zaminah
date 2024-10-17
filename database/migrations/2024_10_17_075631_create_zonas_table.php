@@ -24,10 +24,10 @@ return new class extends Migration
 
             // Si se elimina un estado, ubicacion o cultura todas las zonas asociadas a ellos deberian elimianrse:
             $table -> foreignId('idEstadoRepublica')
-                    -> constrained('estados')
+                    -> constrained('estados', 'idEstadoRepublica')
                     -> onDelete('cascade');
             $table -> foreignId('idCultura')
-                    -> constrained('culturas')
+                    -> constrained('culturas', 'idCultura')
                     -> onDelete('cascade');
             $table->timestamps();
         });

@@ -12,8 +12,17 @@ class Cultura extends Model
 
     protected $primaryKey = 'idCultura';
 
-    public function fotos() {
-        return $this -> hasMany(CulturaImagen::class,'idCultura', 'idCultura');
+    // ASIGNACION MASIVA
+
+    // CAMPOS PERMITIDOS CON ASIGNACION MASIVA
+    // protected $fillable = ['nombre', 'periodo', 'significado', 'descripcion', 'aportaciones'];
+
+    // CAMPOS IGNORADOS CON ASIGNACION MASIVA
+    protected $guarded = ['fotos'];
+
+    public function fotos()
+    {
+        return $this->hasMany(CulturaImagen::class, 'idCultura', 'idCultura');
     }
 
     // MUTADORES Y ACCESORES

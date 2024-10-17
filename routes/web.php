@@ -41,9 +41,10 @@ Route::controller(AdminCultureController::class) -> prefix('admin/cultures') -> 
     Route::get('', 'index') -> name('admin.cultures.index');
     Route::get('create', 'create') -> name('admin.cultures.create');
     Route::post('', 'store') -> name('admin.cultures.store');
-    Route::get('{id}', 'show') -> name('admin.cultures.show');
-    Route::get('{id}/edit', 'edit') -> name('admin.cultures.edit');
-    Route::put('{id}', 'update') -> name('admin.cultures.update');
+    Route::get('{culture}', 'show') -> name('admin.cultures.show');
+    Route::get('{culture}/edit', 'edit') -> name('admin.cultures.edit');
+    Route::put('{culture}', 'update') -> name('admin.cultures.update');
+    Route::delete('{culture}', 'destroy') -> name('admin.cultures.destroy');
 });
 
 // RUTAS PARA REGISTROS DE ZONAS

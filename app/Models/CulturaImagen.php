@@ -12,8 +12,9 @@ class CulturaImagen extends Model
     protected $table = 'culturas_fotos';
     protected $primaryKey = 'idCulturaFoto';
 
-    public function culturas() {
-        return $this -> belongsTo(Cultura::class, 'idCultura', 'idCultura');
+    public function cultura()
+    {
+        return $this->belongsTo(Cultura::class, 'idCultura', 'idCultura');
     }
 
 }

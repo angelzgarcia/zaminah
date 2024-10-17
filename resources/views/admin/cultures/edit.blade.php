@@ -9,7 +9,7 @@
 
     <h1>VAS A EDITAR LA CULTURA <em><big>"{{$culture->idCultura}}"</big></em></h1>
 
-    <form action="{{route('admin.cultures.update', $culture->idCultura)}}" method="POST" enctype="multipart/form-data">
+    <form action="{{route('admin.cultures.update', $culture)}}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('put')
 
@@ -79,7 +79,7 @@
             @endforeach
         </fieldset>
         {{-- AÑADIR IMAGENES --}}
-        @if ($img_cnt <= 4)
+        @if ($img_cnt < 4)
             <fieldset>
                 <legend>Añadir imagenes</legend>
                 <input type="file" name="new_imgs[]" accept="image/*" multiple>
@@ -95,7 +95,7 @@
 
     <script>
         function crrnt_imgs_disables(img) {
-            var fileInput = document.querySelector(`input[name="current_imgs[${img}]"]`);
+            var fileInput = document.querySelector(`input[name="current_imgs_${img}"]`);
             var checkbox = document.querySelector(`input[name="to_eliminate_imgs[${img}]"]`);
 
             checkbox.checked ? fileInput.disabled = true : fileInput.disabled = false;

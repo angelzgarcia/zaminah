@@ -16,8 +16,12 @@ return new class extends Migration
             $table -> string('mensaje');
             $table -> unsignedTinyInteger('puntuacion');
             // $table -> binary('foto');
-            $table -> foreignId('idUsuario') -> constrained('usuario');
-            $table -> foreignId('idZonaArqueologica') -> constrained('zonas_arqueologicas');
+            $table -> foreignId('idUsuario')
+                    -> constrained('usuarios', 'idUsuario')
+                    -> onDelete('cascade');
+            $table -> foreignId('idZonaArqueologica')
+                    -> constrained('zonas', 'idZonaArqueologica')
+                    -> onDelete('cascade');
             $table->timestamps();
         });
     }

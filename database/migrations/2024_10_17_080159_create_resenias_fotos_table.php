@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('zonas_fotos', function (Blueprint $table) {
-            $table -> id('idZonaFoto');
+        Schema::create('resenias_fotos', function (Blueprint $table) {
+            $table -> id('idReseniaFoto');
             $table -> string('foto');
-            $table -> foreignId('idZonaArqueologica')
-                    -> constrained('zonas')
+            $table -> foreignId('idResenia')
+                    -> constrained('resenias', 'idResenia')
                     -> onDelete('cascade');
             $table -> timestamps();
         });
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('zonas_fotos');
+        Schema::dropIfExists('resenias_fotos');
     }
 };

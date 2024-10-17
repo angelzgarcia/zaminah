@@ -14,7 +14,8 @@
             _
             <a href="{{route('admin.cultures.show', $cultura->idCultura)}}">{{$cultura->nombre}}</a>
             {{-- query strings son los parametros que tiene el metodo route --}}
-            <span><small><a href="{{route('admin.cultures.edit', $cultura->idCultura, 'edit')}}">Editar</a></small></span>
+            <span><small><a href="{{route('admin.cultures.edit', $cultura, 'edit')}}">Editar</a></small></span>
+            <span><small><a href="{{route('admin.cultures.destroy', $cultura, 'edit')}}">Eliminar</a></small></span>
         </h1>
 
     @endforeach

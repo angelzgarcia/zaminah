@@ -15,7 +15,7 @@ return new class extends Migration
             $table -> id('idCulturaFoto');
             $table -> string('foto');
             $table -> foreignId('idCultura')
-                    -> constrained('culturas')
+                    -> constrained('culturas', 'idCultura')
                     -> onDelete('cascade');
             $table -> timestamps();
         });
