@@ -28,7 +28,7 @@ class StoreCulturaRequest extends FormRequest
             'significado' => 'required',
             'descripcion' => 'required',
             'fotos' => 'required|array|min:2|max:4',
-            'fotos.*' => 'image|mimes:jpeg,jpg,png,gif,webp',
+            'fotos.*' => 'image|mimes:jpeg,jpg,png,webp',
             'aportaciones' => 'required',
         ];
     }

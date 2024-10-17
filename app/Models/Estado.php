@@ -10,7 +10,7 @@ class Estado extends Model
 {
     use HasFactory;
 
-        // MUTADORES Y ACCESORES
+    // MUTADORES Y ACCESORES
     protected function nombre(): Attribute {
         return new Attribute(
             set: fn($name) => strtolower($name),

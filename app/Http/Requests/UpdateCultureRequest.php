@@ -34,13 +34,18 @@ class UpdateCultureRequest extends FormRequest
             'significado' => 'required|max:255',
             'descripcion' => 'required|max:1500',
             'aportaciones' => 'required',
-            'imgs_actuales' => ''
+            'to_eliminate_imgs' => 'nullable|array|max:2',
+            // 'current_imgs' => 'nullable|array|max:4',
+            'current_imgs_*' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10000',
+            'new_imgs' => 'nullable|array|max:4',
+            'new_imgs.*' => 'image|mimes:jpg,jpeg,png,webp',
         ];
     }
 
     public function messages() {
         return [
-            'significado' => ''
+            'to_eliminate_imgs' => 'Debes dejar al menos una imagen',
+            'to_eliminate_imgs.max' => 'Debes dejar al menos dos imagen',
         ];
     }
 

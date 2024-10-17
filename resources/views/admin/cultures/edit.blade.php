@@ -10,10 +10,10 @@
     <h1>VAS A EDITAR LA CULTURA <em><big>"{{$culture->idCultura}}"</big></em></h1>
 
     <form action="{{route('admin.cultures.update', $culture->idCultura)}}" method="POST" enctype="multipart/form-data">
-
         @csrf
         @method('put')
 
+        {{-- NOMBRE --}}
         <fieldset>
             <legend>Nombre</legend>
             <input type="text" name="nombre" value="{{old('nombre', $culture->nombre)}}" >
@@ -21,7 +21,7 @@
                 <div class="error">{{ $errors -> first('nombre') }}</div>
             @endif
         </fieldset>
-
+        {{-- PERIODO --}}
         <fieldset>
             <legend>Periodo</legend>
             <textarea name="periodo" id="" cols="30" rows="10" >{{old('periodo', $culture->periodo)}}</textarea>
@@ -29,7 +29,7 @@
                 <div class="error">{{$errors -> first('periodo')}}</div>
             @endif
         </fieldset>
-
+        {{-- SIGNIFICADO --}}
         <fieldset>
             <legend>Significado</legend>
             <textarea name="significado" id="" cols="30" rows="10" >{{old('significado', $culture->significado)}}</textarea>
@@ -37,7 +37,7 @@
                 <div class="error">{{$errors -> first('significado')}}</div>
             @endif
         </fieldset>
-
+        {{-- DESCRIPCION --}}
         <fieldset>
             <legend>Descripcion</legend>
             <textarea name="descripcion" id="" cols="30" rows="10" >{{old('descripcion', $culture->descripcion)}}</textarea>
@@ -45,35 +45,7 @@
                 <div class="error">{{$message}}</div>
             @enderror
         </fieldset>
-
-        <fieldset>
-            <legend>Fotos</legend>
-            @foreach ($culture->fotos as $foto)
-                {{-- <input type="hidden" name="imgs_actuales_ids[]" value="{{ $foto->idCulturaFoto }}"> --}}
-
-                {{$foto->idCulturaFoto}}
-                <label for="imgs_update">Actualizar imagen</label>
-                <input type="file" name="imgs_actuales_ids[{{$foto->idCulturaFoto}}]" id="imgs_actuales" multiple>
-
-                <input type="checkbox" name="imgs_delete[]" id="imgs_delete" value="{{$foto->idCulturaFoto}}">Eliminar imagen
-
-                <div>
-                    <img src="{{img_u_url($foto->foto)}}" width="300px" alt="cultura">
-                </div>
-
-                @if ($errors -> has('fotos'))
-                    <div class="error">{{$errors -> first('fotos')}}</div>
-                @endif
-            @endforeach
-        </fieldset>
-
-        @if ($img_cnt != 4)
-            <fieldset>
-                <legend>Añadir imagenes</legend>
-                <input type="file" name="imgs_nuevas[]" id="imgs_nuevas" accept="image/*" multiple>
-            </fieldset>
-        @endif
-
+        {{-- APORTACIONES --}}
         <fieldset>
             <legend>Aportaciones</legend>
             <textarea name="aportaciones" id="" cols="30" rows="10" >{{old('aportaciones', $culture->aportaciones)}}</textarea>
@@ -81,6 +53,38 @@
                 <div class="error">{{$errors -> first('aportaciones')}}</div>
             @endif
         </fieldset>
+        {{-- FOTOS --}}
+        <fieldset>
+            <legend>Fotos {{$img_cnt}}</legend>
+            @error ('to_eliminate_imgs')
+                <div class="error">{{$message}}</div>
+            @enderror
+            @error ('new_imgs')
+                <div class="error">{{$message}}</div>
+            @enderror
+            @error ('current_imgs_*')
+                <div class="error">{{$message}}</div>
+            @enderror
+            @foreach ($culture->fotos as $foto)
+                {{$foto->idCulturaFoto}}
+                <label for="imgs_update">Actualizar imagen</label>
+                <input type="hidden" name="current_imgs_dec[{{hash_img($foto->idCulturaFoto)}}]" value="{{$foto->idCulturaFoto}}">
+                <input type="file" name="current_imgs_{{hash_img($foto->idCulturaFoto)}}" accept="image/*">
+
+                <input type="checkbox" name="to_eliminate_imgs[{{hash_img($foto->idCulturaFoto)}}]" value="{{$foto->idCulturaFoto}}" onchange="crrnt_imgs_disables('{{hash_img($foto->idCulturaFoto)}}')">Eliminar imagen
+
+                <div>
+                    <img src="{{img_u_url($foto->foto)}}" width="300px" alt="cultura">
+                </div>
+            @endforeach
+        </fieldset>
+        {{-- AÑADIR IMAGENES --}}
+        @if ($img_cnt <= 4)
+            <fieldset>
+                <legend>Añadir imagenes</legend>
+                <input type="file" name="new_imgs[]" accept="image/*" multiple>
+            </fieldset>
+        @endif
 
         <button type="submit">Guardar cambios</button>
     </form>
@@ -90,14 +94,12 @@
 @section('js')
 
     <script>
-        var ipfl = document.querySelectorAll('input[name="imgs_nuevas[]"]');
-        var chbx = document.querySelectorAll('input[name="imgs_delete[]"]');
+        function crrnt_imgs_disables(img) {
+            var fileInput = document.querySelector(`input[name="current_imgs[${img}]"]`);
+            var checkbox = document.querySelector(`input[name="to_eliminate_imgs[${img}]"]`);
 
-        chbx.forEach((checkbox, index) => {
-            checkbox.addEventListener('change', function() {
-                checkbox.checked ? ipfl[index].disabled = true : ipfl[index].disabled = false
-            });
-        });
+            checkbox.checked ? fileInput.disabled = true : fileInput.disabled = false;
+        }
     </script>
 
 @endsection

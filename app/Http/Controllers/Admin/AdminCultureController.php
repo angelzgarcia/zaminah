@@ -29,6 +29,15 @@ class AdminCultureController extends Controller
         return view('admin.cultures.create');
     }
 
+    public function storeImg($imgs_arr_name, $request, $culture) {
+        if ($request->hasFile($imgs_arr_name))
+            foreach($request -> file($imgs_arr_name) as $foto) {
+                $cultureImage = new CulturaImagen();
+                $cultureImage -> foto = basename(time() .'-'. $foto -> store('img/uploads', 'public'));
+                $cultureImage -> idCultura = $culture -> idCultura;
+                $cultureImage -> save();
+            }
+    }
     /**
      * Store a newly created resource in storage.
      */
@@ -42,13 +51,7 @@ class AdminCultureController extends Controller
         $culture -> aportaciones = $request -> aportaciones;
         $culture -> save();
 
-        if ($request->hasFile('fotos'))
-            foreach($request -> file('fotos') as $foto) {
-                $cultureImage = new CulturaImagen();
-                $cultureImage -> foto = basename(time() .'-'. $foto -> store('img/uploads', 'public'));
-                $cultureImage -> idCultura = $culture -> idCultura;
-                $cultureImage -> save();
-            }
+        $this->storeImg('fotos', $request, $culture);
 
         return redirect() -> route('admin.cultures.index');
     }
@@ -86,30 +89,82 @@ class AdminCultureController extends Controller
      */
     public function update(UpdateCultureRequest $request, $id)
     {
-        // $culture = Cultura::where('idCultura', $id) -> first();
-        if ($request->hasFile('imgs_actuales_ids')) {
-            foreach ($request->file('imgs_actuales_ids') as $idCulturaFoto => $files) {
-                    echo "CulturaFoto ID: $idCulturaFoto ---- Archivo: $files";
-            }
-        }
+        $culture = Cultura::where('idCultura', $id) -> first();
+
+        $culture -> nombre = $request -> nombre;
+        $culture -> periodo = $request -> periodo;
+        $culture -> significado  = $request -> significado;
+        $culture -> descripcion = $request -> descripcion;
+        $culture -> aportaciones = $request -> aportaciones;
+
+        $to_eliminate_imgs = $request->to_eliminate_imgs;
+        $current_imgs_dec = $request->current_imgs_dec;
+        $new_imgs = $request -> new_imgs;
+
+        // ACTUALIZAR FOTOS
+        if ($to_eliminate_imgs):
+            foreach ($current_imgs_dec as $hash_id => $id_unhash):
+                $hash_id_value = hash_img($id_unhash);
+                if ($hash_id != $hash_id_value):
+                    return redirect()
+                            -> back()
+                            -> with('error', 'a donde vas wei');
+                elseif ($request -> hasFile('current_imgs_'.$hash_id)):
+                        $img_culture = CulturaImagen::where('idCulturaFoto', $id_unhash)->first();
+                        Storage::disk('public') -> delete("img/uploads/{$img_culture -> foto}");
+                        $img_culture -> foto = basename(time() . '-' . $request -> file('current_imgs_'.$hash_id) -> store('img/uploads', 'public'));
+                        $img_culture -> save();
+                endif;
+            endforeach;
+        endif;
+
+        
+        // ELIMINAR FOTOS
+        if ($to_eliminate_imgs):
+            $image = CulturaImagen::where('idCultura', $id) -> count();
+            $count_elim = count($to_eliminate_imgs);
+            // VALIDAR MINIMO DE IMAGENES
+            if (($image == $count_elim) || ($image - $count_elim < 2)):
+                return redirect()
+                        -> back()
+                        -> withInput()
+                        -> withErrors(['to_eliminate_imgs' => 'Debes dejar al menos 2 imagenes']);
+            else:
+                // BORRAR FOTOS SELECCIONADAS
+                foreach($to_eliminate_imgs as $enc_id => $id_img):
+                    if ($enc_id != hash_img($id_img)):
+                        return redirect()
+                                -> back()
+                                -> with('error', 'nel perro');
+                    else:
+                        $image = CulturaImagen::where('idCulturaFoto', $id_img) -> first();
+                        Storage::disk('public')->delete("img/uploads/$image->foto");
+                        $image -> where('idCulturaFoto', $id_img) -> delete() ;
+                    endif;
+                endforeach;
+            endif;
+        endif;
 
 
-        // $culture -> nombre = $request -> nombre;
-        // $culture -> periodo = $request -> periodo;
-        // $culture -> significado  = $request -> significado;
-        // $culture -> descripcion = $request -> descripcion;
-        // $culture -> aportaciones = $request -> aportaciones;
+        // AÑADIR MAS IMAGENES
+        if ($new_imgs):
+            $count_current_imgs = CulturaImagen::where('idCultura', $id) -> count();
+            $count_new_imgs = count($new_imgs);
+            // VALIDAR MAXIMO DE IMAGENES
+            if (($count_current_imgs > 3) || ($count_current_imgs + $count_new_imgs > 4)):
+                return redirect()
+                        -> back()
+                        -> withInput()
+                        -> withErrors(['new_imgs' => 'Solo se permiten 4 imagenes como máximo']);
+            else:
+                $this -> storeImg('new_imgs', $request, $culture);
+            endif;
+        endif;
 
-        // if ($request -> hasFile('foto')) {
-        //     if ($culture -> foto && Storage::disk('public')->exists("img/uploads/{$culture -> foto}"))
-        //         Storage::disk('public')->delete("img/uploads/{$culture -> foto}");
 
-        //     $culture -> foto = basename(time() .'-'. $request -> file('foto') -> store('img/uploads', 'public'));
-        // }
+        $culture -> update();
 
-        // $culture -> update();
-
-        // return redirect() -> route('admin.cultures.show', $culture->idCultura);
+        return redirect() -> route('admin.cultures.show', $culture->idCultura);
     }
 
     /**

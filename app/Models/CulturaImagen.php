@@ -10,5 +10,10 @@ class CulturaImagen extends Model
     use HasFactory;
 
     protected $table = 'culturas_fotos';
+    protected $primaryKey = 'idCulturaFoto';
+
+    public function culturas() {
+        return $this -> belongsTo(Cultura::class, 'idCultura', 'idCultura');
+    }
 
 }
