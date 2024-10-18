@@ -17,8 +17,8 @@ return new class extends Migration
             $table -> string('capital', 30);
             $table -> string('foto');
             $table -> string('video');
-            $table -> binary('triptico');
-            $table -> binary('guia');
+            $table -> string('triptico');
+            $table -> string('guia');
             $table -> timestamps();
         });
     }

@@ -23,3 +23,10 @@ if (!function_exists('img_a_url')) {
 function hash_img($img) {
     return hash_hmac('sha256', base64_encode($img), env('APP_KEY'));
 }
+
+
+if (!function_exists('guia_url')) {
+    function pdf_url($filename) {
+        return asset('storage/guias/'.$filename);
+    }
+}

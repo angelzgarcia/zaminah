@@ -8,7 +8,6 @@
     <h3><a href="{{route('admin.cultures.create')}}">Agregar cultura</a></h3>
 
     @foreach ($culturas as $cultura)
-
         <h1>
             <span>{{$cultura->idCultura}}</span>
             _
@@ -17,7 +16,6 @@
             <span><small><a href="{{route('admin.cultures.edit', $cultura, 'edit')}}">Editar</a></small></span>
             <span><small><a href="{{route('admin.cultures.destroy', $cultura, 'edit')}}">Eliminar</a></small></span>
         </h1>
-
     @endforeach
 
     <div class="paginador">

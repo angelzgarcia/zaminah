@@ -12,8 +12,8 @@ use Illuminate\Support\Facades\Storage;
 class AdminCultureController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
+        * Display a listing of the resource.
+    */
     public function index()
     {
         $culturas = Cultura::orderBy('idCultura', 'desc') -> paginate();
@@ -165,7 +165,7 @@ class AdminCultureController extends Controller
             endif;
         endif;
 
-        // $culture -> update();
+        $culture -> update();
 
         return redirect() -> route('admin.cultures.show', $culture->idCultura);
     }

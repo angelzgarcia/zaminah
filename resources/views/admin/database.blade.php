@@ -112,7 +112,7 @@
                 <div class="table-header"></div>
                 <div class="table-access">
                     <div class="table-name">
-                        <h3><a href="">estados</a></h3>
+                        <h3><a href="{{route('admin.states.index')}}">estados</a></h3>
                     </div>
                     <div class="table-actions">
                         <a href="">

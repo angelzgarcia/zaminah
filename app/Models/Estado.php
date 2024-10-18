@@ -10,6 +10,12 @@ class Estado extends Model
 {
     use HasFactory;
 
+    protected $table = 'estados';
+    protected $primaryKey = 'idEstadoRepublica';
+
+    // protected $fillable = [];
+    protected $guarded = ['foto', 'triptico', 'guia'];
+
     // MUTADORES Y ACCESORES
     protected function nombre(): Attribute {
         return new Attribute(

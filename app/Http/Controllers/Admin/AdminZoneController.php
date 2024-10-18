@@ -12,7 +12,7 @@ class AdminZoneController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
