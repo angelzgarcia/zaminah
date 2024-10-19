@@ -56,15 +56,10 @@
         {{-- FOTOS --}}
         <fieldset>
             <legend>Fotos {{$img_cnt}}</legend>
-            @error ('to_eliminate_imgs')
-                <div class="error">{{$message}}</div>
-            @enderror
-            @error ('new_imgs')
-                <div class="error">{{$message}}</div>
-            @enderror
-            @error ('current_imgs_*')
-                <div class="error">{{$message}}</div>
-            @enderror
+            @error ('to_eliminate_imgs') <div class="error">{{$message}}</div> @enderror
+            @error ('new_imgs') <div class="error">{{$message}}</div> @enderror
+            @error ('current_imgs_*') <div class="error">{{$message}}</div> @enderror
+
             @foreach ($culture->fotos as $foto)
                 {{$foto->idCulturaFoto}}
                 <label for="imgs_update">Actualizar imagen</label>
@@ -73,9 +68,7 @@
 
                 <input type="checkbox" name="to_eliminate_imgs[{{hash_img($foto->idCulturaFoto)}}]" value="{{$foto->idCulturaFoto}}" onchange="crrnt_imgs_disables('{{hash_img($foto->idCulturaFoto)}}')">Eliminar imagen
 
-                <div>
-                    <img src="{{img_u_url($foto->foto)}}" width="300px" alt="cultura">
-                </div>
+                <div> <img src="{{img_u_url($foto->foto)}}" width="300px" alt="cultura"> </div>
             @endforeach
         </fieldset>
         {{-- AÑADIR IMAGENES --}}
@@ -92,7 +85,6 @@
 
 
 @section('js')
-
     <script>
         function crrnt_imgs_disables(img) {
             var fileInput = document.querySelector(`input[name="current_imgs_${img}"]`);
@@ -101,5 +93,4 @@
             checkbox.checked ? fileInput.disabled = true : fileInput.disabled = false;
         }
     </script>
-
 @endsection

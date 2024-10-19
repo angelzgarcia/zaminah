@@ -47,18 +47,18 @@
         <fieldset>
             <legend>Triptico</legend>
             <input type="file" name="triptico">
-            <input type="text" name="" id="" value="{{old('triptico', basename(pdf_url($state->triptico)))}}" disabled>
-            @if ($errors -> has(''))
-                <div class="error">{{$errors -> first('')}}</div>
+            <input type="text" name="" id="" value="{{old('triptico', basename(triptico_url($state->triptico)))}}" disabled>
+            @if ($errors -> has('triptico'))
+                <div class="error">{{$errors -> first('triptico')}}</div>
             @endif
         </fieldset>
 
         <fieldset>
             <legend>Guia</legend>
             <input type="file" name="guia">
-            <input type="text" name="" id="" value="{{old('guia', basename(pdf_url($state->guia)))}}" disabled>
-            @if ($errors -> has(''))
-                <div class="error">{{$errors -> first('')}}</div>
+            <input type="text" name="" id="" value="{{old('guia', basename(guia_url($state->guia)))}}" disabled>
+            @if ($errors -> has('guia'))
+                <div class="error">{{$errors -> first('guia')}}</div>
             @endif
         </fieldset>
 

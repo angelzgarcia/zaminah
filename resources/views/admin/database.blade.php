@@ -36,7 +36,7 @@
                 <div class="table-header"></div>
                 <div class="table-access">
                     <div class="table-name">
-                        <h3><a href="">zonas arqueologicas</a></h3>
+                        <h3><a href="{{route('admin.zones.index')}}">zonas arqueologicas</a></h3>
                     </div>
                     <div class="table-actions">
                         <a href="">

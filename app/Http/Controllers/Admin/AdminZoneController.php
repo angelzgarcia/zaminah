@@ -3,7 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreZoneRequest;
+use App\Http\Requests\UpdateZoneRequest;
+use App\Models\Cultura;
+use App\Models\Estado;
+use App\Models\ZonaImagen;
+use App\Models\Zona;
+use \Illuminate\Support\Facades\Storage;
 
 class AdminZoneController extends Controller
 {
@@ -12,47 +18,171 @@ class AdminZoneController extends Controller
      */
     public function index()
     {
-        
+        $zones = Zona::orderBy('idZonaArqueologica', 'desc') -> paginate();
+        return view('admin.zones.index', compact('zones'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Estado $states, Cultura $cultures)
     {
-        //
+        $states = Estado::orderBy('nombre', 'asc') -> get();
+        $cultures = Cultura::orderBy('nombre', 'asc') -> get();
+
+        return view('admin.zones.create', compact('states', 'cultures'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreZoneRequest $request)
     {
-        //
+        $zone = new Zona();
+
+        $de_dia = $request -> de_dia;
+        $a_dia = $request -> a_dia;
+        $de_hora = $request-> de_hora;
+        $a_hora = $request -> a_hora;
+
+        $tiempo_de_hora = $de_hora <= 12 ? 'a.m.' : 'p.m.';
+        $tiempo_a_hora = $a_hora <= 12 ? 'a.m.' : 'p.m.';
+
+        $horario = "De $de_dia a $a_dia de las $de_hora $tiempo_de_hora a las $a_hora $tiempo_a_hora";
+
+        $zone -> nombre = $request -> nombre;
+        $zone -> significado = $request -> significado;
+        $zone -> descripcion = $request -> descripcion;
+        $zone -> acceso = $request -> acceso;
+        $zone -> horario = $horario;
+        $zone -> costoEntrada = $request -> costo;
+        $zone -> contacto = $request -> contacto;
+        $zone -> idEstadoRepublica = $request -> estado;
+        $zone -> idCultura = $request -> cultura;
+
+        if ($request -> hasFile('fotos')) {
+            foreach ($request -> file('fotos') as $img) {
+                $zonaFotos = new ZonaImagen();
+                $zonaFotos -> foto = basename(time() . '-' . $img -> store('img/uploads', 'public'));
+                $zone -> save();
+                $zonaFotos -> idZonaArqueologica = $zone -> idZonaArqueologica;
+                $zonaFotos -> save();
+            }
+        }
+
+        return view('admin.zones.show', compact('zone'));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Zona $zone)
     {
-        //
+        if (!$zone)
+            return redirect() -> route('admin.zones.index');
+
+        return view('admin.zones.show', compact('zone'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Zona $zone)
     {
-        //
+        if (!$zone)
+            return redirect() -> route('admin.zones.index');
+
+        $states = Estado::orderBy('nombre', 'asc') -> get();
+        $cultures = Cultura::orderBy('nombre', 'asc') -> get();
+        $img_zone_count = ZonaImagen::where('idZonaArqueologica', $zone->idZonaArqueologica) -> count();
+
+        $horario = explode(' ', $zone->horario);
+        for ($i = 0; $i < count($horario); $i++) $horario[$i];
+
+        $de_hora = $horario[6];
+        $a_hora = $horario[count($horario)-2];
+
+        return view('admin.zones.edit', compact('zone', 'states', 'cultures', 'de_hora', 'a_hora', 'img_zone_count'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateZoneRequest $request, Zona $zone)
     {
-        //
+        $zone -> nombre = $request -> nombre;
+        $zone -> significado = $request -> significado;
+        $zone -> descripcion = $request -> descripcion;
+        $zone -> acceso = $request -> acceso;
+        $zone -> costoEntrada = $request -> costo;
+        $zone -> contacto = $request -> contacto;
+        $zone -> idEstadoRepublica = $request -> estado;
+        $zone -> idCultura = $request -> cultura;
+
+        $count_current_imgs = ZonaImagen::where('idZonaArqueologica', $zone -> idZonaArqueologica) -> count();
+
+        if ($request -> hasFile('new_imgs')):
+            $count_new_imgs = $request -> new_imgs;
+            $count_new_imgs = count($count_new_imgs);
+
+            if (($count_current_imgs > 3) || ($count_current_imgs + $count_new_imgs > 4)):
+                return redirect()
+                        -> back()
+                        -> withInput()
+                        -> withErrors(['new_imgs' => 'Máximo 4 imagenes']);
+
+            else:
+                foreach($request -> file('new_imgs') as $foto) {
+                    $zoneImg = new ZonaImagen();
+                    $zoneImg -> foto = basename(time() .'-'. $foto -> store('img/uploads', 'public'));
+                    $zoneImg -> idZonaArqueologica = $zone -> idZonaArqueologica;
+                    $zoneImg -> save();
+                }
+            endif;
+        endif;
+
+        if ($request -> current_imgs_dec):
+            foreach ($request -> current_imgs_dec as $id_enc => $id_dec):
+                if ($id_enc != hash_img($id_dec)) {
+                    return redirect()
+                            -> back()
+                            -> withInput()
+                            -> withErrors(["current_imgs_$id_enc" => 'Hubo problemas al identificar la imagen']);
+
+                } else if ($request -> hasFile("current_imgs_$id_enc")) {
+                    $img_zone = ZonaImagen::where('idZonaFoto', $id_dec) -> first();
+                    Storage::disk('public') -> delete("img/uploads/$img_zone -> foto");
+
+                    $img_zone -> foto = basename(time() . '-' . $request -> file("current_imgs_$id_enc") -> store('img/uploads', 'public'));
+                    $img_zone -> save();
+                }
+            endforeach;
+        endif;
+
+        $t_e_i = $request -> to_eliminate_imgs;
+        if ($t_e_i):
+            if (($count_current_imgs < 3) || ($count_current_imgs - count($t_e_i) < 2)) {
+                return redirect()
+                        -> back()
+                        -> withInput()
+                        -> withErrors(['to_eliminate_imgs' => 'Al menos 2 imagenes deben permanecer']);
+            }
+
+            foreach ($request -> to_eliminate_imgs as $id_enc => $id_dec):
+                if ($id_enc != hash_img($id_dec)) {
+                    return redirect()
+                            -> back()
+                            -> withInput()
+                            -> withErrors(["current_imgs_$id_enc" => 'Hubo problemas al identificar la imagen']);
+
+                } else {
+                    $zone_img = ZonaImagen::where('idZonaFoto', $id_dec) -> delete();
+                    Storage::disk('public') -> delete("img/uploads/$zone_img -> foto");
+                }
+            endforeach;
+        endif;
+
+        return view('admin.zones.show', compact('zone'));
     }
 
     /**

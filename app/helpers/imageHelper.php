@@ -25,8 +25,3 @@ function hash_img($img) {
 }
 
 
-if (!function_exists('guia_url')) {
-    function pdf_url($filename) {
-        return asset('storage/guias/'.$filename);
-    }
-}

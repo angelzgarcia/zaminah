@@ -16,6 +16,10 @@ class Estado extends Model
     // protected $fillable = [];
     protected $guarded = ['foto', 'triptico', 'guia'];
 
+    public function zonas() {
+        return $this -> hasMany(Zona::class, 'idEstadoRepublica', 'idEstadoRepublica');
+    }
+
     // MUTADORES Y ACCESORES
     protected function nombre(): Attribute {
         return new Attribute(

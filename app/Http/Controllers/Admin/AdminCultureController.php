@@ -16,7 +16,7 @@ class AdminCultureController extends Controller
     */
     public function index()
     {
-        $culturas = Cultura::orderBy('idCultura', 'desc') -> paginate();
+        $culturas = Cultura::orderBy('idCultura', 'asc') -> paginate();
         // return $culturas;
         return view('admin.cultures.index', compact('culturas'));
     }
@@ -114,7 +114,7 @@ class AdminCultureController extends Controller
                             -> back()
                             -> with('error', 'a donde vas wei');
                 elseif ($request -> hasFile('current_imgs_'.$hash_id)):
-                        $img_culture = CulturaImagen::where('idCulturaFoto', $id_unhash)->first();
+                        $img_culture = CulturaImagen::where('idCulturaFoto', $id_unhash) -> first();
                         Storage::disk('public') -> delete("img/uploads/{$img_culture -> foto}");
                         $img_culture -> foto = basename(time() . '-' . $request -> file('current_imgs_'.$hash_id) -> store('img/uploads', 'public'));
                         $img_culture -> save();
@@ -158,7 +158,7 @@ class AdminCultureController extends Controller
                                 -> with('error', 'nel perro');
                     else:
                         $image = CulturaImagen::where('idCulturaFoto', $id_img) -> first();
-                        Storage::disk('public')->delete("img/uploads/$image->foto");
+                        Storage::disk('public')->delete("img/uploads/$image -> foto");
                         $image -> where('idCulturaFoto', $id_img) -> delete() ;
                     endif;
                 endforeach;

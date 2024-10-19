@@ -16,6 +16,7 @@
             <span><small><a href="{{route('admin.cultures.edit', $cultura, 'edit')}}">Editar</a></small></span>
             <span><small><a href="{{route('admin.cultures.destroy', $cultura, 'edit')}}">Eliminar</a></small></span>
         </h1>
+        
     @endforeach
 
     <div class="paginador">

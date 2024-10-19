@@ -14,14 +14,31 @@ class Zona extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'idZonaArqueologica';
 
+    protected $guarded = [];
+
+
+    // relacion uno a uno. una zona TIENE una ubicacion
+    // clave foranea en la tabla relacionada (UBICACION) -> FOREIGN DE HAS ONE
+    // clave primaria en la tabla actual (ZONA) -> PRIMARY DEL MODELO
     public function ubicacion()
     {
-        // relacion uno a uno. una zona TIENE una ubicacion
-        // clave foranea en la tabla relacionada (UBICACION) -> FOREIGN DE HAS ONE
-        // clave primaria en la tabla actual (ZONA) -> PRIMARY DEL MODELO
         return $this -> hasOne(Ubicacion::class, 'idZonaArqueologica', 'idZonaArqueologica');
     }
+
+    public function estados() {
+        return $this -> belongsTo(Estado::class, 'idEstadoRepublica', 'idEstadoRepublica');
+    }
+
+    public function culturas() {
+        return $this -> belongsTo(Cultura::class, 'idCultura', 'idCultura');
+    }
+
+    public function fotos() {
+        return $this -> hasMany(ZonaImagen::class, 'idZonaArqueologica', 'idZonaArqueologica');
+    }
+
 
     // MUTADORES Y ACCESORES
     protected function nombre(): Attribute {

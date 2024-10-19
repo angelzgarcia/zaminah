@@ -25,6 +25,10 @@ class Cultura extends Model
         return $this->hasMany(CulturaImagen::class, 'idCultura', 'idCultura');
     }
 
+    public function zonas() {
+        return $this -> hasMany(Zona::class, 'idCultura', 'idCultura');
+    }
+
     // MUTADORES Y ACCESORES
     protected function nombre(): Attribute {
         return new Attribute(
