@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('culturas_fotos', function(Blueprint $table) {
             $table -> id('idCulturaFoto');
             $table -> string('foto');
+
             $table -> foreignId('idCultura')
                     -> constrained('culturas', 'idCultura')
                     -> onDelete('cascade');

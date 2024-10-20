@@ -16,6 +16,12 @@ class EstadoFactory extends Factory
      */
     public function definition(): array
     {
+        // $dir =  storage_path('app/public/imgs_fake');
+
+        // if (!is_dir($dir)) {
+        //     mkdir($dir, 0755, true);
+        // }
+
         return [
             'nombre'=> fake() -> unique() -> randomElement([
                 'Aguascalientes', 'Baja California', 'Baja California Sur', 'Campeche', 'Chiapas',

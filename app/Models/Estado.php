@@ -10,6 +10,23 @@ class Estado extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'idEstadoRepublica';
+
+    // protected $fillable = [];
+    protected $guarded = ['foto', 'triptico', 'guia'];
+
+    public function ubicacion() {
+        return $this -> hasOne(UbicacionEstado::class, 'idEstadoRepublica', 'idEstadoRepublica');
+    }
+
+    public function zonas() {
+        return $this -> hasMany(Zona::class, 'idEstadoRepublica', 'idEstadoRepublica');
+    }
+
+    public function culturas() {
+        return $this -> belongsToMany(Cultura::class);
+    }
+
     // MUTADORES Y ACCESORES
     protected function nombre(): Attribute {
         return new Attribute(

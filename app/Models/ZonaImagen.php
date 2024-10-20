@@ -11,4 +11,10 @@ class ZonaImagen extends Model
 
     protected $table = 'zonas_fotos';
 
+    protected $primaryKey = 'idZonaFoto';
+
+    public function zona() {
+        return $this -> belongsTo(Zona::class, 'idZonaArqueologica', 'idZonaArqueologica');
+    }
+
 }

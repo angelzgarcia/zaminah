@@ -24,8 +24,8 @@ Route::get('/',  [UserHomeController::class, 'index']) -> name('home');
 
 // RUTAS PARA DASHBOARD ADMIN
 Route::controller(AdminHomeController::class) -> prefix('admin')->group(function () {
-    Route::get('dashboard', 'index') -> name('admin.dashboard');
-    Route::get('database',  'show_database') -> name('admin.database');
+    Route::get('dashboard', 'index') -> name('admin.dashboard.index');
+    Route::get('database',  'show_database') -> name('admin.database.index');
 });
 
 // RUTAS PARA REGISTROS DE USUARIOS
@@ -47,25 +47,28 @@ Route::controller(AdminCultureController::class) -> prefix('admin/cultures') -> 
     Route::delete('{culture}', 'destroy') -> name('admin.cultures.destroy');
 });
 
-// RUTAS PARA REGISTROS DE ZONAS
-Route::controller(AdminZoneController::class) -> prefix('zones') -> group(function() {
-    Route::get('', 'index') -> name('admin.zones.index');
-    Route::get('create', 'create') -> name('admin.zones.create');
-
-    Route::get('{id}', 'show') -> name('admin.zones.show');
-    Route::get('edit/{id}', 'edit') -> name('admin.zones.edit');
-    Route::put('{id}', 'update') -> name('admin.zones.update');
-});
-
 // RUTAS PARA REGISTROS DE ESTADOS
-Route::controller(AdminZoneController::class) -> prefix('states') -> group(function() {
+Route::controller(AdminStateController::class) -> prefix('admin/states') -> group(function() {
     Route::get('', 'index') -> name('admin.states.index');
     Route::get('create', 'create') -> name('admin.states.create');
-
-    Route::get('{id}', 'show') -> name('admin.states.show');
-    Route::get('edit/{id}', 'edit') -> name('admin.states.edit');
-    Route::put('{id}', 'update') -> name('admin.states.update');
+    Route::post('', 'store') -> name('admin.states.store');
+    Route::get('{state}', 'show') -> name('admin.states.show');
+    Route::get('{state}/edit', 'edit') -> name('admin.states.edit');
+    Route::put('{state}', 'update') -> name('admin.states.update');
+    Route::delete('{state}', 'destroy') -> name('admin.states.destroy');
 });
+
+// RUTAS PARA REGISTROS DE ZONAS
+Route::controller(AdminZoneController::class) -> prefix('admin/zones') -> group(function() {
+    Route::get('', 'index') -> name('admin.zones.index');
+    Route::get('create', 'create') -> name('admin.zones.create');
+    Route::post('', 'store') -> name('admin.zones.store');
+    Route::get('{zone}', 'show') -> name('admin.zones.show');
+    Route::get('{zone}/edit', 'edit') -> name('admin.zones.edit');
+    Route::put('{zone}', 'update') -> name('admin.zones.update');
+    Route::delete('{zone}', 'destroy') -> name('admin.zones.destroy');
+});
+
 
 // RUTAS PARA REGISTROS DE RESEÑAS
 Route::controller(AdminReviewController::class) -> prefix('reviews') -> group(function() {

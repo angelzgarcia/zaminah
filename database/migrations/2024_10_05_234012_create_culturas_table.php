@@ -12,14 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('culturas', function (Blueprint $table) {
-            $table->id('idCultura');
+            $table -> id('idCultura');
             $table -> string('nombre', 30) -> unique();
             $table -> string('periodo', 60);
             $table -> string('significado');
             $table -> text('descripcion');
             // $table -> binary('foto');
             $table -> text('aportaciones');
-            $table->timestamps();
+            $table ->timestamps();
         });
     }
 
@@ -30,4 +30,5 @@ return new class extends Migration
     {
         Schema::dropIfExists('culturas');
     }
+
 };

@@ -10,5 +10,10 @@ class ReseniaImagen extends Model
     use HasFactory;
 
     protected $table = 'resenias_fotos';
+    protected $primaryKey = 'idReseniaFoto';
+
+    public function resenia() {
+        return $this -> belongsTo(Resenia::class, 'idResenia', 'idResenia');
+    }
 
 }

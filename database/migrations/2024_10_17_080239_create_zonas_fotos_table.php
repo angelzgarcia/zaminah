@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('zonas_fotos', function (Blueprint $table) {
             $table -> id('idZonaFoto');
             $table -> string('foto');
+
             $table -> foreignId('idZonaArqueologica')
                     -> constrained('zonas', 'idZonaArqueologica')
                     -> onDelete('cascade');

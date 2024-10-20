@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Ubicacion;
 use App\Models\Cultura;
 use App\Models\Estado;
 

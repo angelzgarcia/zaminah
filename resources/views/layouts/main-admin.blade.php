@@ -2,6 +2,7 @@
 <html lang="en">
 {{-- HEAD --}}
 @include('partials.head')
+@yield('maps')
 <body id="body-admin">
     {{-- SIDEBAR ADMIN --}}
     @include('partials.sidebar-admin')
@@ -17,7 +18,5 @@
     </main>
 
 </body>
-
     @yield('js')
-
 </html>
