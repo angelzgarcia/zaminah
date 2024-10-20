@@ -16,11 +16,11 @@ class EstadoFactory extends Factory
      */
     public function definition(): array
     {
-        $dir =  storage_path('app/public/imgs_fake');
+        // $dir =  storage_path('app/public/imgs_fake');
 
-        if (!is_dir($dir)) {
-            mkdir($dir, 0755, true);
-        }
+        // if (!is_dir($dir)) {
+        //     mkdir($dir, 0755, true);
+        // }
 
         return [
             'nombre'=> fake() -> unique() -> randomElement([
@@ -32,7 +32,7 @@ class EstadoFactory extends Factory
                 'Veracruz', 'Yucatán', 'Zacatecas'
             ]),
             'capital'=> fake() -> unique() -> city(),
-            'foto' => fake() ->  image($dir, 600, 400, null, true),
+            'foto' => fake() ->  imageUrl(),
             'video'=> fake() -> url(),
             'triptico'=> 'triptico.pdf',
             'guia'=> 'guia.pdf',

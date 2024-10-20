@@ -179,7 +179,7 @@ footer {
         linear-gradient(
             rgba(0,0,0,0.5) 100%,
             rgba(0,0,0,0.0)
-            ), url('../storage/img/downloads/miranda-garside-aaGej_rGBpQ-unsplash.jpg');
+            ), url('/public/storage/img/downloads/miranda-garside-aaGej_rGBpQ-unsplash.jpg');
         }
     & .zonas-home {
         border-radius: 1em 1em 0 0;
@@ -188,7 +188,7 @@ footer {
         linear-gradient(
             rgba(0,0,0,0.5) 100%,
             rgba(0,0,0,0.0)
-        ), url(../storage/img/downloads/marv-watson-UfK0P6WygEE-unsplash.jpg);
+        ), url(/public/storage/img/downloads/marv-watson-UfK0P6WygEE-unsplash.jpg);
     }
     & .culturas-home {
         border-radius: 0 0 1em 1em;
@@ -196,7 +196,7 @@ footer {
         linear-gradient(
             rgba(0,0,0,0.5) 100%,
             rgba(0,0,0,0.0)
-        ), url(../storage/img/downloads/julie-sd-Ae3iebFg524-unsplash.jpg);
+        ), url(/public/storage/img/downloads/julie-sd-Ae3iebFg524-unsplash.jpg);
     }
 }
 

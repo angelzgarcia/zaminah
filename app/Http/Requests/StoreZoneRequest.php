@@ -36,6 +36,7 @@ class StoreZoneRequest extends FormRequest
             'cultura' => 'required|exists:culturas,idCultura',
             'fotos' => 'required|array|min:2|max:4',
             'fotos.*' => 'image|mimes:jpg,jpeg,png,webp|distinct|max:10000',
+            // 'direccion' => 'required|string|alpha_num:ascii',
         ];
     }
 
@@ -52,6 +53,8 @@ class StoreZoneRequest extends FormRequest
             'fotos.*.distinct' => 'Este archvio ya ha sido cargado',
             'fotos.*.max' => 'Archivo demasiado pesado, máximo 10MB',
             'costo.numeric' => 'Ingresa una cantidad válida',
+            // 'direccion.string' => 'Tipo de dato no valido',
+            // 'direccion.alpha_num' => 'Caracteres no validos',
         ];
     }
 

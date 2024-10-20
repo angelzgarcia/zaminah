@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use \Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreZoneRequest;
 use App\Http\Requests\UpdateZoneRequest;
 use App\Models\Cultura;
 use App\Models\Estado;
+use App\Models\UbicacionZona;
 use App\Models\ZonaImagen;
 use App\Models\Zona;
-use \Illuminate\Support\Facades\Storage;
 
 class AdminZoneController extends Controller
 {
@@ -68,6 +69,16 @@ class AdminZoneController extends Controller
                 $zonaFotos -> idZonaArqueologica = $zone -> idZonaArqueologica;
                 $zonaFotos -> save();
             }
+
+            $ubicacion = new UbicacionZona();
+
+            $direccion = $request -> direccion;
+            $coordenadas = getCoordinates($direccion);
+
+            $ubicacion -> latitud = $coordenadas['lat'];
+            $ubicacion -> longitud = $coordenadas['lng'];
+            $ubicacion -> idZonaArqueologica = $zone -> idZonaArqueologica;
+            $ubicacion -> save();
         }
 
         return view('admin.zones.show', compact('zone'));
@@ -191,7 +202,7 @@ class AdminZoneController extends Controller
     public function destroy(Zona $zone)
     {
         $zone -> delete();
-        
+
         return redirect() -> route('admin.zones.index');
     }
 }

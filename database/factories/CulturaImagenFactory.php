@@ -17,13 +17,14 @@ class CulturaImagenFactory extends Factory
      */
     public function definition(): array
     {
-        $dir =  storage_path('app/public/imgs_fake');
+        // $dir =  storage_path('app/public/imgs_fake');
 
-        if (!is_dir($dir)) {
-            mkdir($dir, 0755, true);
-        }
+        // if (!is_dir($dir)) {
+        //     mkdir($dir, 0755, true);
+        // }
+        
         return [
-            'foto' => fake() -> image($dir, 640, 480, null, true),
+            'foto' => fake() -> imageUrl(),
 
             'idCultura' => Cultura::inRandomOrder()
                         -> first()

@@ -1,14 +1,34 @@
 @extends('layouts.main-admin')
 
 @section('src-maps')
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIpIISAV4iA4HQYpwSDnBpgVe2iQFKYig&loading=async&libraries=places&callback=initMap" defer></script>
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIpIISAV4iA4HQYpwSDnBpgVe2iQFKYig&loading=async&libraries=places&callback=initMap"></script>
     <script type="module" src="https://unpkg.com/@googlemaps/extended-component-library@0.6"></script>
 @endsection
 
 @section('titulo', 'Añadir zona | INAH')
 
 @section('admin-content')
-    <form action="{{route('admin.zones.store')}}" method="POST" autocomplete="off" enctype="multipart/form-data">
+<style>
+
+    #info-box {
+        padding: 10px 0;
+        display: flex;
+        flex-direction: column;
+        /* gap: .3em; */
+        z-index: 100000;
+        font-family: Arial, sans-serif;
+    }
+
+    /* Estilos adicionales para el contenido */
+    .info-title {
+        font-weight: bold;
+    }
+
+    .info-content {
+        margin-top: 5px;
+    }
+</style>
+    <form action="{{route('admin.zones.store')}}" method="POST" autocomplete="off" enctype="multipart/form-data" onload="initMap()">
         @csrf
 
         <h2>Agrega una zona arqueologica</h2>
@@ -107,8 +127,9 @@
         <fieldset>
             <legend>¿En qué estado de la República Mexicana se encuentra?</legend>
             <select name="estado" id="estado">
+                <option value="" selected disabled>Selecciona un estado</option>
                 @foreach ($states as $state)
-                    <option value="{{old('estado', $state->idEstadoRepublica)}}">{{$state->nombre}}</option>
+                    <option value="{{$state->idEstadoRepublica}}" {{old('estado') == $state->idEstadoRepublica ? 'selected' : ''}}>{{$state->nombre}}</option>
                 @endforeach
             </select>
             @error ('estado')
@@ -119,6 +140,7 @@
         <fieldset>
             <legend>¿A qué cultura perteneció esta Zona Arqueológica?</legend>
             <select name="cultura" id="cultura">
+                    <option value="" disabled selected>Selecciona una cultura</option>
                     @foreach ($cultures as $cult)
                         <option value="{{old('cultura', $cult->idCultura)}}">{{$cult->nombre}}</option>
                     @endforeach
@@ -138,11 +160,11 @@
 
         <fieldset>
             <legend>Ubicación</legend>
-            <input type="text" name="direccion" id="direccion" style="width: 100%" required>
+            <input type="text" name="direccion" id="direccion" style="width: 100%">
             <input type="hidden" name="latitud"  id="latitud" required disabled>
             <input type="hidden" name="longitud" id="longitud" required disabled>
-            <br><br>
-            <div id="map" style="width: 100%; height: 500px;"></div>
+            <div id="info-box"></div>
+            <div id="map" style="width: 100%; height: 500px;"> </div>
         </fieldset>
 
         <button type="submit">Guardar</button>
@@ -158,7 +180,6 @@
 
         function initMap() {
             mexico = { lat: 23.6345, lng: -102.5528 };
-            infowindow = new google.maps.InfoWindow();
             geocoder = new google.maps.Geocoder();
 
             map = new google.maps.Map(
@@ -166,6 +187,7 @@
                     zoom: 6,
                     center: mexico,
                     mapTypeControl: true,
+                    scrollwheel: false,
                     mapTypeControlOptions: {
                         style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
                         position: google.maps.ControlPosition.TOP_CENTER,
@@ -351,6 +373,10 @@
                 draggable: true,
             });
 
+            infoBox = document.getElementById("info-box");
+
+            getAddressFromCoordinates(marker.getPosition());
+
             google.maps.event.addListener(marker, 'dragend', function() {
                 const latLng = marker.getPosition();
                 updateInputs(latLng);
@@ -389,8 +415,15 @@
                 if (status === "OK") {
                     if (results[0]) {
                         document.getElementById("direccion").value = results[0].formatted_address;
-                        infowindow.setContent(results[0].formatted_address);
-                        infowindow.open(map, marker);
+                        const lat = latLng.lat();
+        const lng = latLng.lng();
+
+        // infoBox.style.display = 'flex';
+        infoBox.innerHTML = `
+            <div class="info-title">Coordenadas:</div>
+            <div class="info-content">Latitud: ${lat}<br>Longitud: ${lng}</div>
+        `;
+                        positionInfoBox(latLng);
                     } else {
                         window.alert("No se encontraron resultados.");
                     }
@@ -399,7 +432,42 @@
                 }
             });
         }
+        function positionInfoBox(latlng) {
+    const projection = map.getProjection();
+    const point = projection.fromLatLngToPoint(latlng);
+    // const scale = Math.pow(2, map.getZoom());
+    // const pixelCoordinates = new google.maps.Point(
+    //     point.x * scale,
+    //     point.y * scale
+    // );
 
-        window.onload = initMap;
+    // Obtener las dimensiones del cuadro de información
+    const infoBoxWidth = infoBox.offsetWidth;
+    const infoBoxHeight = infoBox.offsetHeight;
+
+    // Calcular la posición final del cuadro de información
+    const mapDiv = document.getElementById('map'); // Asegúrate de que 'map' sea el ID correcto
+    const mapOffset = mapDiv.getBoundingClientRect();
+
+    // Ajustar la posición relativa al mapa
+    infoBox.style.left = pixelCoordinates.x + 'px';
+    infoBox.style.top = (pixelCoordinates.y - infoBoxHeight) + 'px'; // Coloca el cuadro por encima del marcador
+
+    // Asegurarte de que el cuadro de información no se salga de la pantalla
+    const infoBoxRect = infoBox.getBoundingClientRect();
+    if (infoBoxRect.right > window.innerWidth) {
+        infoBox.style.left = (window.innerWidth - infoBoxWidth) + 'px';
+    }
+    if (infoBoxRect.bottom > window.innerHeight) {
+        infoBox.style.top = (window.innerHeight - infoBoxHeight) + 'px';
+    }
+
+    // Considera el desplazamiento del mapa
+    const scrollY = window.scrollY || document.documentElement.scrollTop;
+    infoBox.style.top = (parseInt(infoBox.style.top) + scrollY) + 'px';
+}
+
+
+
     </script>
 @endsection
