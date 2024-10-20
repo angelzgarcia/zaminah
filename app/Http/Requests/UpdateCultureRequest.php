@@ -31,13 +31,13 @@ class UpdateCultureRequest extends FormRequest
                 'regex:/^[\pL\s]+$/u',
             ],
             'periodo' => 'required|max:255',
-            'significado' => 'required|max:255',
-            'descripcion' => 'required|max:1500',
-            'aportaciones' => 'required',
-            'to_eliminate_imgs' => 'nullable|array|max:2',
-            // 'current_imgs' => 'nullable|array|max:4',
+            'significado' => 'required|alpha_numeric:ascii',
+            'descripcion' => 'required|alpha_numeric:ascii',
+            'aportaciones' => 'required|alpha_numeric:ascii',
+            'to_eliminate_imgs' => 'nullable|array|max:2|max:2|distinct',
+            'to_eliminate_imgs.*' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10000',
             'current_imgs_*' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10000',
-            'new_imgs' => 'nullable|array|max:4',
+            'new_imgs' => 'nullable|array|max:4|distinct',
             'new_imgs.*' => 'image|mimes:jpg,jpeg,png,webp',
         ];
     }
@@ -46,6 +46,9 @@ class UpdateCultureRequest extends FormRequest
         return [
             'to_eliminate_imgs' => 'Debes dejar al menos una imagen',
             'to_eliminate_imgs.max' => 'Debes dejar al menos dos imagen',
+            'nombre.required' => 'El nombre de la cultura es obligatorio',
+            'descripcion.required' => 'La descripcion de la cultura es obligatoria',
+            'fotos.required' => 'Carga entre 2 a 4 imagenes',
         ];
     }
 

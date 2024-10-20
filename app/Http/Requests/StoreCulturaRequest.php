@@ -25,10 +25,10 @@ class StoreCulturaRequest extends FormRequest
         return [
             'nombre' => 'required|string|max:80|unique:culturas,nombre|regex: /^[\pL\s]+$/u',
             'periodo' => 'required|max:255',
-            'significado' => 'required',
-            'descripcion' => 'required',
+            'significado' => 'required|alpha_numeric:ascii',
+            'descripcion' => 'required|alpha_numeric:ascii',
             'fotos' => 'required|array|min:2|max:4',
-            'fotos.*' => 'image|mimes:jpeg,jpg,png,webp',
+            'fotos.*' => 'image|mimes:jpeg,jpg,png,webp|distinct|max:10000',
             'aportaciones' => 'required',
         ];
     }

@@ -1,3 +1,4 @@
+
 @extends('layouts.main-admin')
 
 @section('titulo', 'Añadir estado | INAH')
@@ -7,6 +8,7 @@
         @csrf
 
         <h2>Agrega un estado</h2>
+        
         <fieldset>
             <legend>Nombre</legend>
             <input type="text" name="nombre" value="{{old('nombre')}}">

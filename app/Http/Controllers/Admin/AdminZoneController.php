@@ -151,7 +151,7 @@ class AdminZoneController extends Controller
 
                 } else if ($request -> hasFile("current_imgs_$id_enc")) {
                     $img_zone = ZonaImagen::where('idZonaFoto', $id_dec) -> first();
-                    Storage::disk('public') -> delete("img/uploads/$img_zone -> foto");
+                    Storage::disk('public') -> delete("img/uploads/{$img_zone -> foto}");
 
                     $img_zone -> foto = basename(time() . '-' . $request -> file("current_imgs_$id_enc") -> store('img/uploads', 'public'));
                     $img_zone -> save();
@@ -188,8 +188,10 @@ class AdminZoneController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Zona $zone)
     {
-        //
+        $zone -> delete();
+        
+        return redirect() -> route('admin.zones.index');
     }
 }

@@ -2,23 +2,21 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Validation\Rules\Unique;
 use App\Models\Zona;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Ubicacion>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\UbicacionZona>
  */
-class UbicacionFactory extends Factory
+class UbicacionZonaFactory extends Factory
 {
-
     private static $usedIds = [];
 
     /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
-    */
+     */
     public function definition(): array
     {
         $zonas = Zona::all();
@@ -45,6 +43,7 @@ class UbicacionFactory extends Factory
         return [
             'latitud' => fake() -> unique() -> latitude(),
             'longitud' => fake() -> unique() -> longitude(),
+            
             'idZonaArqueologica' => $idZonaArqueologica,
         ];
     }

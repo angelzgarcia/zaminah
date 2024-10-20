@@ -19,10 +19,11 @@ return new class extends Migration
             $table -> string('foto');
             $table -> string('email', 60) -> unique();
             $table -> unsignedBigInteger('numero') -> unique();
-            $table -> string('password', 20);
-            $table -> string('token', 8);
+            $table -> string('password');
+            $table -> string('token', 10);
             $table -> unsignedTinyInteger('confirmado');
             $table -> enum('status', ['activo', 'inactivo']);
+
             $table -> foreignId('idRol')
                     -> constrained('roles', 'idRol')
                     -> onDelete('cascade');

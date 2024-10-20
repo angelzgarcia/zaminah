@@ -3,13 +3,12 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Usuario;
 use App\Models\Zona;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Resenia>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ZonaImagen>
  */
-class ReseniaFactory extends Factory
+class ZonaImagenFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,17 +17,18 @@ class ReseniaFactory extends Factory
      */
     public function definition(): array
     {
-        return [
-            'mensaje' => fake() -> paragraphs(3, true),
-            'puntuacion' => fake() -> randomNumber(1, true),
+        $dir = storage_path('app/public/imgs_fake');
 
-            'idUsuario' => Usuario::inRandomOrder()
-                        -> first()
-                        -> idUsuario,
+        if (!is_dir($dir)) {
+            mkdir($dir, 0755, true);
+        }
+
+        return [
+            'foto' => fake() -> image($dir, 640, 480, null, true),
+
             'idZonaArqueologica' => Zona::inRandomOrder()
                                 -> first()
                                 -> idZonaArqueologica,
-
         ];
     }
 }

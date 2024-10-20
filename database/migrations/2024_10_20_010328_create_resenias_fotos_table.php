@@ -11,9 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('roles', function (Blueprint $table) {
-            $table -> id('idRol');
-            $table -> enum('tipo', ['administrador', 'usuario']);
+        Schema::create('resenias_fotos', function (Blueprint $table) {
+            $table -> id('idReseniaFoto');
+            $table -> string('foto');
+            
+            $table -> foreignId('idResenia')
+                    -> constrained('resenias', 'idResenia')
+                    -> onDelete('cascade');
             $table -> timestamps();
         });
     }
@@ -23,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('roles');
+        Schema::dropIfExists('resenias_fotos');
     }
 };

@@ -13,3 +13,7 @@
         </div>
     </nav>
 </header>
+
+@section('js')
+    <script src="{{asset('js/app.js')}}"></script>
+@endsection

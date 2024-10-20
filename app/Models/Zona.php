@@ -24,7 +24,7 @@ class Zona extends Model
     // clave primaria en la tabla actual (ZONA) -> PRIMARY DEL MODELO
     public function ubicacion()
     {
-        return $this -> hasOne(Ubicacion::class, 'idZonaArqueologica', 'idZonaArqueologica');
+        return $this -> hasOne(UbicacionZona::class, 'idZonaArqueologica', 'idZonaArqueologica');
     }
 
     public function estados() {
@@ -37,6 +37,10 @@ class Zona extends Model
 
     public function fotos() {
         return $this -> hasMany(ZonaImagen::class, 'idZonaArqueologica', 'idZonaArqueologica');
+    }
+
+    public function resenias() {
+        return $this -> hasMany(Resenia::class, 'idZonaArqueologica', 'idZonaArqueologica');
     }
 
 

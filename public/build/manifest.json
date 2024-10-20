@@ -1,29 +1,12 @@
 {
-  "public/img/uploads/caret-right-solid.svg": {
-    "file": "assets/caret-right-solid-C1nVDzC_.svg",
-    "src": "public/img/uploads/caret-right-solid.svg"
-  },
-  "public/img/uploads/julie-sd-Ae3iebFg524-unsplash.jpg": {
-    "file": "assets/julie-sd-Ae3iebFg524-unsplash-DxkqQwqQ.jpg",
-    "src": "public/img/uploads/julie-sd-Ae3iebFg524-unsplash.jpg"
-  },
-  "public/img/uploads/marv-watson-UfK0P6WygEE-unsplash.jpg": {
-    "file": "assets/marv-watson-UfK0P6WygEE-unsplash-BXCBh6W_.jpg",
-    "src": "public/img/uploads/marv-watson-UfK0P6WygEE-unsplash.jpg"
-  },
-  "public/img/uploads/miranda-garside-aaGej_rGBpQ-unsplash.jpg": {
-    "file": "assets/miranda-garside-aaGej_rGBpQ-unsplash-Cn0kBa7_.jpg",
-    "src": "public/img/uploads/miranda-garside-aaGej_rGBpQ-unsplash.jpg"
-  },
   "resources/css/app.css": {
-    "file": "assets/app-Br93-rs6.css",
-    "src": "resources/css/app.css",
-    "isEntry": true
+    "file": "assets/app-c9827e5e.css",
+    "isEntry": true,
+    "src": "resources/css/app.css"
   },
   "resources/js/app.js": {
-    "file": "assets/app-S3hZgZY1.js",
-    "name": "app",
-    "src": "resources/js/app.js",
-    "isEntry": true
+    "file": "assets/app-05761b63.js",
+    "isEntry": true,
+    "src": "resources/js/app.js"
   }
 }

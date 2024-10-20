@@ -11,12 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ubicaciones', function (Blueprint $table) {
-            $table -> id('idUbicacion');
-            $table -> decimal('latitud', 6, 3) -> unique();
-            $table -> decimal('longitud', 6, 3) -> unique();
+        Schema::create('resenias', function (Blueprint $table) {
+            $table->id('idResenia');
+            $table -> text('mensaje');
+            $table -> unsignedTinyInteger('puntuacion');
+
+            $table -> foreignId('idUsuario')
+                    -> constrained('usuarios', 'idUsuario')
+                    -> onDelete('cascade');
             $table -> foreignId('idZonaArqueologica')
-                    -> unique()
                     -> constrained('zonas', 'idZonaArqueologica')
                     -> onDelete('cascade');
             $table->timestamps();
@@ -28,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ubicaciones');
+        Schema::dropIfExists('resenias');
     }
 };

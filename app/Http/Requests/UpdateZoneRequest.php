@@ -22,7 +22,45 @@ class UpdateZoneRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nombre' => 'required|unique:zonas,nombre|string|max:60',
+            'significado' => 'required|alpha_num:ascii',
+            'descripcion' => 'required|alpha_num:ascii',
+            'acceso' => 'required|alpha_num:ascii',
+            'de_dia' => 'required|string',
+            'a_dia' => 'required|string',
+            'de_hora' => 'required|string',
+            'a_hora' => 'required|string',
+            'costo' => 'required|numeric|max:1000',
+            'contacto' => 'required|string',
+            'estado' => 'required|exists:estados,idEstadoRepublica',
+            'cultura' => 'required|exists:culturas,idCultura',
+            'current_imgs_*' => 'image|mimes:jpg,jpeg,png,webp|distinct|max:10000',
+            'to_eliminate_imgs' => 'nullable|array|min:2|max:4',
+            'to_eliminate_imgs.*' => 'image|mimes:jpg,jpeg,png,webp|distinct|max:10000',
+            'new_imgs' => 'nullable|array|min:2|max:4',
+            'new_imgs.*' => 'image|mimes:jpg,jpeg,png,webp|distinct|max:10000',
         ];
     }
+
+    public function messages() {
+        return [
+            'estado.exists' => 'Hubo problemas al encontrar el estado de la republica',
+            'cultura.exists' => 'Hubo problemas al encontrar la cultura',
+            'significado.alpha_num' => 'Se ingresaron carácteres no permitidos',
+            'descripcion.alpha_num' => 'Se ingresaron carácteres no permitidos',
+            'acceso.alpha_num' => 'Se ingresaron carácteres no permitidos',
+            'to_eliminate_imgs.max' => 'Sube como máximo 4 imagenes',
+            'new_imgs_imgs.max' => 'Sube como máximo 4 imagenes',
+            'new_imgs_imgs.min' => 'Sube al menos 2 imagenes',
+            'to_eliminate_imgs.min' => 'Sube al menos 2 imagenes',
+            'to_eliminate_imgs.*.mimes' => 'No se permite el formato subido',
+            'new_imgs.*.mimes' => 'No se permite el formato subido',
+            'to_eliminate_imgs.*.distinct' => 'Este archvio ya ha sido cargado',
+            'new_imgs_imgs.*.distinct' => 'Este archvio ya ha sido cargado',
+            'to_eliminate_imgs.*.max' => 'Archivo demasiado pesado, máximo 10MB',
+            'new_imgs_imgs.*.max' => 'Archivo demasiado pesado, máximo 10MB',
+            'costo.numeric' => 'Ingresa una cantidad válida',
+        ];
+    }
+
 }

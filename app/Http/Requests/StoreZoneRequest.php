@@ -23,9 +23,9 @@ class StoreZoneRequest extends FormRequest
     {
         return [
             'nombre' => 'required|unique:zonas,nombre|string|max:60',
-            'significado' => 'required|alpha_num',
-            'descripcion' => 'required|alpha_num',
-            'acceso' => 'required|alpha_num',
+            'significado' => 'required|alpha_num:ascii',
+            'descripcion' => 'required|alpha_num:ascii',
+            'acceso' => 'required|alpha_num:ascii',
             'de_dia' => 'required|string',
             'a_dia' => 'required|string',
             'de_hora' => 'required|string',
@@ -50,6 +50,7 @@ class StoreZoneRequest extends FormRequest
             'fotos.min' => 'Sube al menos 2 imagenes',
             'fotos.*.mimes' => 'No se permite el formato subido',
             'fotos.*.distinct' => 'Este archvio ya ha sido cargado',
+            'fotos.*.max' => 'Archivo demasiado pesado, máximo 10MB',
             'costo.numeric' => 'Ingresa una cantidad válida',
         ];
     }

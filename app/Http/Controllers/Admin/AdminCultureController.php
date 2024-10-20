@@ -176,6 +176,7 @@ class AdminCultureController extends Controller
     public function destroy(Cultura $culture)
     {
         $culture -> delete();
+        
         return redirect() -> route('admin.cultures.index');
     }
 }

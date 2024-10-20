@@ -24,8 +24,8 @@ Route::get('/',  [UserHomeController::class, 'index']) -> name('home');
 
 // RUTAS PARA DASHBOARD ADMIN
 Route::controller(AdminHomeController::class) -> prefix('admin')->group(function () {
-    Route::get('dashboard', 'index') -> name('admin.dashboard');
-    Route::get('database',  'show_database') -> name('admin.database');
+    Route::get('dashboard', 'index') -> name('admin.dashboard.index');
+    Route::get('database',  'show_database') -> name('admin.database.index');
 });
 
 // RUTAS PARA REGISTROS DE USUARIOS
