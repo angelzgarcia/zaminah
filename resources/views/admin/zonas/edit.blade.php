@@ -9,7 +9,7 @@
 
 @section('admin-content')
 
-    <form action="{{route('admin.zones.update', $zone)}}" method="POST" autocomplete="off" enctype="multipart/form-data" onload="initMap()>
+    <form action="{{route('admin.zonas.update', $zone)}}" method="POST" autocomplete="off" enctype="multipart/form-data" onload="initMap()>
         @csrf
         @method('put')
 
@@ -160,7 +160,7 @@
         @endif
 
         <fieldset>
-            <legend>Ubicación</legend>
+            <legend>Direccion</legend>
             <input type="text" name="direccion" id="direccion" style="width: 100%">
             <input type="hidden" name="latitud"  id="latitud"  value="{{$location->latitud}}" required disabled>
             <input type="hidden" name="longitud" id="longitud" value="{{$location->longitud}}" required disabled>

@@ -23,9 +23,9 @@ class StoreZoneRequest extends FormRequest
     {
         return [
             'nombre' => 'required|unique:zonas,nombre|string|max:60',
-            'significado' => 'required|alpha_num:ascii',
-            'descripcion' => 'required|alpha_num:ascii',
-            'acceso' => 'required|alpha_num:ascii',
+            'significado' => 'required|string',
+            'descripcion' => 'required|string',
+            'acceso' => 'required|string',
             'de_dia' => 'required|string',
             'a_dia' => 'required|string',
             'de_hora' => 'required|string',
@@ -44,9 +44,9 @@ class StoreZoneRequest extends FormRequest
         return [
             'estado.exists' => 'Hubo problemas al encontrar el estado de la republica',
             'cultura.exists' => 'Hubo problemas al encontrar la cultura',
-            'significado.alpha_num' => 'Se ingresaron carácteres no permitidos',
-            'descripcion.alpha_num' => 'Se ingresaron carácteres no permitidos',
-            'acceso.alpha_num' => 'Se ingresaron carácteres no permitidos',
+            // 'significado.alpha_num' => 'Se ingresaron carácteres no permitidos',
+            // 'descripcion.alpha_num' => 'Se ingresaron carácteres no permitidos',
+            // 'acceso.alpha_num' => 'Se ingresaron carácteres no permitidos',
             'fotos.max' => 'Sube como máximo 4 imagenes',
             'fotos.min' => 'Sube al menos 2 imagenes',
             'fotos.*.mimes' => 'No se permite el formato subido',

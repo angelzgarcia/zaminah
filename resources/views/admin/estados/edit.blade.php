@@ -8,7 +8,7 @@
 @section('titulo', 'Editar estado | INAH')
 
 @section('admin-content')
-    <form action="{{route('admin.states.update', $state)}}" method="POST" enctype="multipart/form-data" onload="initMap()">
+    <form action="{{route('admin.estados.update', $state)}}" method="POST" enctype="multipart/form-data" onload="initMap()">
         @csrf
         @method('put')
 

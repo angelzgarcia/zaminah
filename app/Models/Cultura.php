@@ -10,6 +10,7 @@ class Cultura extends Model
 {
     use HasFactory;
 
+    protected $table = 'culturas';
     protected $primaryKey = 'idCultura';
 
     // ASIGNACION MASIVA

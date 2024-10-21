@@ -18,7 +18,7 @@
                     <div class="table-header"></div>
                     <div class="table-access">
                         <div class="table-name">
-                            <h3><a href="">{{$table['name']}}</a></h3>
+                            <h3><a href="{{route("admin.{$table['name']}.index")}}">{{$table['name']}}</a></h3>
                         </div>
                         <div class="table-actions">
                             <a href="">

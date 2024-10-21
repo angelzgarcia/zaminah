@@ -16,9 +16,9 @@ class AdminCultureController extends Controller
     */
     public function index()
     {
-        $culturas = Cultura::orderBy('idCultura', 'asc') -> paginate();
+        $culturas = Cultura::orderBy('idCultura', 'desc') -> paginate();
         // return $culturas;
-        return view('admin.cultures.index', compact('culturas'));
+        return view('admin.culturas.index', compact('culturas'));
     }
 
     /**
@@ -26,7 +26,7 @@ class AdminCultureController extends Controller
      */
     public function create()
     {
-        return view('admin.cultures.create');
+        return view('admin.culturas.create');
     }
 
     public function storeImg($imgs_arr_name, $request, $culture) {
@@ -55,7 +55,7 @@ class AdminCultureController extends Controller
 
         $this->storeImg('fotos', $request, $culture);
 
-        return redirect() -> route('admin.cultures.show', $culture);
+        return redirect() -> route('admin.culturas.show', $culture);
     }
 
     /**
@@ -67,9 +67,9 @@ class AdminCultureController extends Controller
         // $culture = Cultura::where('idCultura', $id) -> first();
 
         if (!$culture)
-            return redirect() -> route('admin.cultures.index');
+            return redirect() -> route('admin.culturas.index');
 
-        return view('admin.cultures.show', compact('culture'));
+        return view('admin.culturas.show', compact('culture'));
     }
 
     /**
@@ -81,9 +81,9 @@ class AdminCultureController extends Controller
         $img_cnt = count($culture->fotos);
 
         if (!$culture)
-            return redirect() -> route('admin.cultures.index');
+            return redirect() -> route('admin.culturas.index');
 
-        return view('admin.cultures.edit', compact('culture', 'img_cnt'));
+        return view('admin.culturas.edit', compact('culture', 'img_cnt'));
     }
 
     /**
@@ -165,9 +165,7 @@ class AdminCultureController extends Controller
             endif;
         endif;
 
-        $culture -> update();
-
-        return redirect() -> route('admin.cultures.show', $culture->idCultura);
+        return redirect() -> route('admin.culturas.show', $culture->idCultura);
     }
 
     /**
@@ -176,7 +174,7 @@ class AdminCultureController extends Controller
     public function destroy(Cultura $culture)
     {
         $culture -> delete();
-        
-        return redirect() -> route('admin.cultures.index');
+
+        return redirect() -> route('admin.culturas.index');
     }
 }

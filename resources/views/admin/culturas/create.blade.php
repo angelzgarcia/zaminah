@@ -5,10 +5,10 @@
 
 @section('admin-content')
     <h1>AQUÍ SE VAN A PODER AGREGAR CULTURAS</h1>
-    <h2><a href="{{route('admin.cultures.index')}}">Volver a las culturas</a></h2>
+    <h2><a href="{{route('admin.culturas.index')}}">Volver a las culturas</a></h2>
 
     {{-- TOKEN GENERADO POR LARAVEL POR SEGURIDAD  --}}
-    <form action="{{route('admin.cultures.store')}}" method="POST" enctype="multipart/form-data">
+    <form action="{{route('admin.culturas.store')}}" method="POST" enctype="multipart/form-data">
         @csrf
         <h2>Agrega una cultura</h2>
         <fieldset>

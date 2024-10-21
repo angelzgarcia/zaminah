@@ -54,12 +54,12 @@ class ZonaFactory extends Factory
             'costoEntrada' => fake() -> randomFloat(2, 0, 99.99),
             'contacto' => fake() -> sentences(4, true),
 
-            'idEstadoRepublica' => Estado::inRandomOrder()
-                                -> first()
-                                -> idEstadoRepublica,
             'idCultura' => Cultura::inRandomOrder()
                         -> first()
-                        -> idCultura
+                        -> idCultura,
+            'idEstadoRepublica' => Estado::inRandomOrder()
+                                -> first()
+                                -> idEstadoRepublica
         ];
     }
 }

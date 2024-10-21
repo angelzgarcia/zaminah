@@ -18,7 +18,7 @@ class AdminStateController extends Controller
         // $states = new Estado();
         $states = Estado::orderBy('nombre', 'asc') -> paginate();
 
-        return view('admin.states.index', compact('states'));
+        return view('admin.estados.index', compact('states'));
     }
 
     /**
@@ -26,7 +26,7 @@ class AdminStateController extends Controller
      */
     public function create()
     {
-        return view('admin.states.create');
+        return view('admin.estados.create');
     }
 
     /**
@@ -73,7 +73,7 @@ class AdminStateController extends Controller
         $location -> idEstadoRepublica = $state -> idEstadoRepublica;
         $location -> save();
 
-        return redirect() -> route('admin.states.show', compact('state'));
+        return redirect() -> route('admin.estados.show', compact('state'));
     }
 
     /**
@@ -82,9 +82,9 @@ class AdminStateController extends Controller
     public function show(Estado $state)
     {
         if (!$state)
-            return redirect() -> route('admin.states.index');
+            return redirect() -> route('admin.estados.index');
 
-        return view('admin.states.show', compact('state'));
+        return view('admin.estados.show', compact('state'));
     }
 
     /**
@@ -93,9 +93,9 @@ class AdminStateController extends Controller
     public function edit(Estado $state)
     {
         if (!$state)
-            return redirect() -> route('admin.states.index');
+            return redirect() -> route('admin.estados.index');
 
-        return view('admin.states.edit', compact('state'));
+        return view('admin.estados.edit', compact('state'));
     }
 
     /**
@@ -141,7 +141,7 @@ class AdminStateController extends Controller
         $location -> idEstadoRepublica = $state -> idEstadoRepublica;
         $location -> update();
 
-        return redirect() -> route('admin.states.show', compact('state'));
+        return redirect() -> route('admin.estados.show', compact('state'));
     }
 
     /**
@@ -150,6 +150,6 @@ class AdminStateController extends Controller
     public function destroy(Estado $state)
     {
         $state -> delete();
-        return redirect() -> route('admin.states.index');
+        return redirect() -> route('admin.estados.index');
     }
 }
