@@ -8,26 +8,6 @@
 @section('titulo', 'Añadir zona | INAH')
 
 @section('admin-content')
-<style>
-
-    #info-box {
-        padding: 10px 0;
-        display: flex;
-        flex-direction: column;
-        /* gap: .3em; */
-        z-index: 100000;
-        font-family: Arial, sans-serif;
-    }
-
-    /* Estilos adicionales para el contenido */
-    .info-title {
-        font-weight: bold;
-    }
-
-    .info-content {
-        margin-top: 5px;
-    }
-</style>
     <form action="{{route('admin.zones.store')}}" method="POST" autocomplete="off" enctype="multipart/form-data" onload="initMap()">
         @csrf
 
@@ -129,7 +109,10 @@
             <select name="estado" id="estado">
                 <option value="" selected disabled>Selecciona un estado</option>
                 @foreach ($states as $state)
-                    <option value="{{$state->idEstadoRepublica}}" {{old('estado') == $state->idEstadoRepublica ? 'selected' : ''}}>{{$state->nombre}}</option>
+                    <option value="{{$state->idEstadoRepublica}}"
+                        {{old('estado') == $state->idEstadoRepublica ? 'selected' : ''}}>
+                        {{$state->nombre}}
+                    </option>
                 @endforeach
             </select>
             @error ('estado')
@@ -142,7 +125,10 @@
             <select name="cultura" id="cultura">
                     <option value="" disabled selected>Selecciona una cultura</option>
                     @foreach ($cultures as $cult)
-                        <option value="{{old('cultura', $cult->idCultura)}}">{{$cult->nombre}}</option>
+                        <option value="{{$cult->idCultura}}"
+                            {{old('cultura') == $cult->idCultura ? 'selected' : ''}}>
+                            {{$cult->nombre}}
+                        </option>
                     @endforeach
             </select>
             @error ('cultura')
@@ -159,7 +145,7 @@
         </fieldset>
 
         <fieldset>
-            <legend>Ubicación</legend>
+            <legend>Direccion</legend>
             <input type="text" name="direccion" id="direccion" style="width: 100%">
             <input type="hidden" name="latitud"  id="latitud" required disabled>
             <input type="hidden" name="longitud" id="longitud" required disabled>
@@ -179,6 +165,11 @@
         let infowindow;
 
         function initMap() {
+            const bounds = new google.maps.LatLngBounds(
+                new google.maps.LatLng(14.5329, -118.4544),
+                new google.maps.LatLng(32.7160, -86.7034)
+            );
+
             mexico = { lat: 23.6345, lng: -102.5528 };
             geocoder = new google.maps.Geocoder();
 
@@ -188,6 +179,10 @@
                     center: mexico,
                     mapTypeControl: true,
                     scrollwheel: false,
+                    restriction: {
+                        latLngBounds: bounds,
+                        strictBounds: true,
+                    },
                     mapTypeControlOptions: {
                         style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
                         position: google.maps.ControlPosition.TOP_CENTER,
@@ -208,7 +203,7 @@
                             "elementType": "geometry",
                             "stylers": [
                             {
-                                "color": "#242f3e"
+                                "color": "#ebe3cd"
                             }
                             ]
                         },
@@ -216,7 +211,7 @@
                             "elementType": "labels.text.fill",
                             "stylers": [
                             {
-                                "color": "#746855"
+                                "color": "#523735"
                             }
                             ]
                         },
@@ -224,16 +219,52 @@
                             "elementType": "labels.text.stroke",
                             "stylers": [
                             {
-                                "color": "#242f3e"
+                                "color": "#f5f1e6"
                             }
                             ]
                         },
                         {
-                            "featureType": "administrative.locality",
+                            "featureType": "administrative",
+                            "elementType": "geometry.stroke",
+                            "stylers": [
+                            {
+                                "color": "#c9b2a6"
+                            }
+                            ]
+                        },
+                        {
+                            "featureType": "administrative.land_parcel",
+                            "elementType": "geometry.stroke",
+                            "stylers": [
+                            {
+                                "color": "#dcd2be"
+                            }
+                            ]
+                        },
+                        {
+                            "featureType": "administrative.land_parcel",
                             "elementType": "labels.text.fill",
                             "stylers": [
                             {
-                                "color": "#d59563"
+                                "color": "#ae9e90"
+                            }
+                            ]
+                        },
+                        {
+                            "featureType": "landscape.natural",
+                            "elementType": "geometry",
+                            "stylers": [
+                            {
+                                "color": "#dfd2ae"
+                            }
+                            ]
+                        },
+                        {
+                            "featureType": "poi",
+                            "elementType": "geometry",
+                            "stylers": [
+                            {
+                                "color": "#dfd2ae"
                             }
                             ]
                         },
@@ -242,16 +273,16 @@
                             "elementType": "labels.text.fill",
                             "stylers": [
                             {
-                                "color": "#d59563"
+                                "color": "#93817c"
                             }
                             ]
                         },
                         {
                             "featureType": "poi.park",
-                            "elementType": "geometry",
+                            "elementType": "geometry.fill",
                             "stylers": [
                             {
-                                "color": "#263c3f"
+                                "color": "#a5b076"
                             }
                             ]
                         },
@@ -260,7 +291,7 @@
                             "elementType": "labels.text.fill",
                             "stylers": [
                             {
-                                "color": "#6b9a76"
+                                "color": "#447530"
                             }
                             ]
                         },
@@ -269,25 +300,16 @@
                             "elementType": "geometry",
                             "stylers": [
                             {
-                                "color": "#38414e"
+                                "color": "#f5f1e6"
                             }
                             ]
                         },
                         {
-                            "featureType": "road",
-                            "elementType": "geometry.stroke",
+                            "featureType": "road.arterial",
+                            "elementType": "geometry",
                             "stylers": [
                             {
-                                "color": "#212a37"
-                            }
-                            ]
-                        },
-                        {
-                            "featureType": "road",
-                            "elementType": "labels.text.fill",
-                            "stylers": [
-                            {
-                                "color": "#9ca5b3"
+                                "color": "#fdfcf8"
                             }
                             ]
                         },
@@ -296,7 +318,7 @@
                             "elementType": "geometry",
                             "stylers": [
                             {
-                                "color": "#746855"
+                                "color": "#f8c967"
                             }
                             ]
                         },
@@ -305,43 +327,79 @@
                             "elementType": "geometry.stroke",
                             "stylers": [
                             {
-                                "color": "#1f2835"
+                                "color": "#e9bc62"
                             }
                             ]
                         },
                         {
-                            "featureType": "road.highway",
-                            "elementType": "labels.text.fill",
-                            "stylers": [
-                            {
-                                "color": "#f3d19c"
-                            }
-                            ]
-                        },
-                        {
-                            "featureType": "transit",
+                            "featureType": "road.highway.controlled_access",
                             "elementType": "geometry",
                             "stylers": [
                             {
-                                "color": "#2f3948"
+                                "color": "#e98d58"
+                            }
+                            ]
+                        },
+                        {
+                            "featureType": "road.highway.controlled_access",
+                            "elementType": "geometry.stroke",
+                            "stylers": [
+                            {
+                                "color": "#db8555"
+                            }
+                            ]
+                        },
+                        {
+                            "featureType": "road.local",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                            {
+                                "color": "#806b63"
+                            }
+                            ]
+                        },
+                        {
+                            "featureType": "transit.line",
+                            "elementType": "geometry",
+                            "stylers": [
+                            {
+                                "color": "#dfd2ae"
+                            }
+                            ]
+                        },
+                        {
+                            "featureType": "transit.line",
+                            "elementType": "labels.text.fill",
+                            "stylers": [
+                            {
+                                "color": "#8f7d77"
+                            }
+                            ]
+                        },
+                        {
+                            "featureType": "transit.line",
+                            "elementType": "labels.text.stroke",
+                            "stylers": [
+                            {
+                                "color": "#ebe3cd"
                             }
                             ]
                         },
                         {
                             "featureType": "transit.station",
-                            "elementType": "labels.text.fill",
-                            "stylers": [
-                            {
-                                "color": "#d59563"
-                            }
-                            ]
-                        },
-                        {
-                            "featureType": "water",
                             "elementType": "geometry",
                             "stylers": [
                             {
-                                "color": "#17263c"
+                                "color": "#dfd2ae"
+                            }
+                            ]
+                        },
+                        {
+                            "featureType": "water",
+                            "elementType": "geometry.fill",
+                            "stylers": [
+                            {
+                                "color": "#b9d3c2"
                             }
                             ]
                         },
@@ -350,16 +408,7 @@
                             "elementType": "labels.text.fill",
                             "stylers": [
                             {
-                                "color": "#515c6d"
-                            }
-                            ]
-                        },
-                        {
-                            "featureType": "water",
-                            "elementType": "labels.text.stroke",
-                            "stylers": [
-                            {
-                                "color": "#17263c"
+                                "color": "#92998d"
                             }
                             ]
                         }
@@ -378,6 +427,28 @@
             getAddressFromCoordinates(marker.getPosition());
 
             google.maps.event.addListener(marker, 'dragend', function() {
+                if (!bounds.contains(marker.getPosition())) {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        iconColor: 'white',
+                        customClass: {
+                            popup: 'colored-toast',
+                        },
+                        didOpen: (toast) => {
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
+                        }
+                        });
+                        Toast.fire({
+                        icon: "warning",
+                        title: "Fuera de los límites de la Reública Mexicana"
+                    });
+                    marker.setPosition(mexico);
+                }
                 const latLng = marker.getPosition();
                 updateInputs(latLng);
                 getAddressFromCoordinates(latLng);
@@ -386,6 +457,11 @@
             const input = document.getElementById("direccion");
             const autocomplete = new google.maps.places.Autocomplete(input);
             autocomplete.bindTo("bounds", map);
+            input.addEventListener('keydown', function(event){
+                if (event.key == 'Enter') {
+                    event.preventDefault();
+                }
+            })
 
             autocomplete.addListener("place_changed", function () {
                 const place = autocomplete.getPlace();
@@ -403,6 +479,18 @@
                 marker.setPosition(place.geometry.location);
                 updateInputs(place.geometry.location);
             });
+
+            map.addListener('dblclick', (event) => {
+                const latLng = event.latLng;
+
+                marker.setPosition(latLng);
+
+                document.getElementById('latitud').value = latLng.lat();
+                document.getElementById('longitud').value = latLng.lng();
+
+                updateInputs(latLng);
+                getAddressFromCoordinates(latLng);
+            });
         }
 
         function updateInputs(latLng) {
@@ -416,14 +504,12 @@
                     if (results[0]) {
                         document.getElementById("direccion").value = results[0].formatted_address;
                         const lat = latLng.lat();
-        const lng = latLng.lng();
+                        const lng = latLng.lng();
 
-        // infoBox.style.display = 'flex';
-        infoBox.innerHTML = `
-            <div class="info-title">Coordenadas:</div>
-            <div class="info-content">Latitud: ${lat}<br>Longitud: ${lng}</div>
-        `;
-                        positionInfoBox(latLng);
+                        // infoBox.style.display = 'flex';
+                        infoBox.innerHTML = `
+                            <div class="info-title">Coordenadas:</div>
+                            <div class="info-content">Latitud: ${lat}<br>Longitud: ${lng}</div>`;
                     } else {
                         window.alert("No se encontraron resultados.");
                     }
@@ -432,42 +518,5 @@
                 }
             });
         }
-        function positionInfoBox(latlng) {
-    const projection = map.getProjection();
-    const point = projection.fromLatLngToPoint(latlng);
-    // const scale = Math.pow(2, map.getZoom());
-    // const pixelCoordinates = new google.maps.Point(
-    //     point.x * scale,
-    //     point.y * scale
-    // );
-
-    // Obtener las dimensiones del cuadro de información
-    const infoBoxWidth = infoBox.offsetWidth;
-    const infoBoxHeight = infoBox.offsetHeight;
-
-    // Calcular la posición final del cuadro de información
-    const mapDiv = document.getElementById('map'); // Asegúrate de que 'map' sea el ID correcto
-    const mapOffset = mapDiv.getBoundingClientRect();
-
-    // Ajustar la posición relativa al mapa
-    infoBox.style.left = pixelCoordinates.x + 'px';
-    infoBox.style.top = (pixelCoordinates.y - infoBoxHeight) + 'px'; // Coloca el cuadro por encima del marcador
-
-    // Asegurarte de que el cuadro de información no se salga de la pantalla
-    const infoBoxRect = infoBox.getBoundingClientRect();
-    if (infoBoxRect.right > window.innerWidth) {
-        infoBox.style.left = (window.innerWidth - infoBoxWidth) + 'px';
-    }
-    if (infoBoxRect.bottom > window.innerHeight) {
-        infoBox.style.top = (window.innerHeight - infoBoxHeight) + 'px';
-    }
-
-    // Considera el desplazamiento del mapa
-    const scrollY = window.scrollY || document.documentElement.scrollTop;
-    infoBox.style.top = (parseInt(infoBox.style.top) + scrollY) + 'px';
-}
-
-
-
     </script>
 @endsection

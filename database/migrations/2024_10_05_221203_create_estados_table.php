@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('estados', function (Blueprint $table) {
             $table -> id('idEstadoRepublica');
-            $table -> string('nombre', 30) -> unique();
-            $table -> string('capital', 30);
+            $table -> string('nombre', 35) -> unique();
+            $table -> string('capital', 35) -> unique();
             $table -> string('foto');
-            $table -> string('video');
+            $table -> string('video') -> unique();
             $table -> tinyText('triptico');
             $table -> tinyText('guia');
             $table -> timestamps();

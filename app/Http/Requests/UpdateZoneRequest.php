@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateZoneRequest extends FormRequest
 {
@@ -22,7 +23,12 @@ class UpdateZoneRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nombre' => 'required|unique:zonas,nombre|string|max:60',
+            'nombre' => [
+                'required',
+                'string',
+                'max:60',
+                Rule::unique('zonas', 'nombre') -> ignore($this -> route('zone') -> idZonaArqueologica, 'idZonaArqueologica'),
+            ],
             'significado' => 'required|alpha_num:ascii',
             'descripcion' => 'required|alpha_num:ascii',
             'acceso' => 'required|alpha_num:ascii',
@@ -35,9 +41,9 @@ class UpdateZoneRequest extends FormRequest
             'estado' => 'required|exists:estados,idEstadoRepublica',
             'cultura' => 'required|exists:culturas,idCultura',
             'current_imgs_*' => 'image|mimes:jpg,jpeg,png,webp|distinct|max:10000',
-            'to_eliminate_imgs' => 'nullable|array|min:2|max:4',
+            'to_eliminate_imgs' => 'nullable|array|max:2',
             'to_eliminate_imgs.*' => 'image|mimes:jpg,jpeg,png,webp|distinct|max:10000',
-            'new_imgs' => 'nullable|array|min:2|max:4',
+            'new_imgs' => 'nullable|array|max:2',
             'new_imgs.*' => 'image|mimes:jpg,jpeg,png,webp|distinct|max:10000',
         ];
     }
@@ -52,7 +58,7 @@ class UpdateZoneRequest extends FormRequest
             'to_eliminate_imgs.max' => 'Sube como máximo 4 imagenes',
             'new_imgs_imgs.max' => 'Sube como máximo 4 imagenes',
             'new_imgs_imgs.min' => 'Sube al menos 2 imagenes',
-            'to_eliminate_imgs.min' => 'Sube al menos 2 imagenes',
+            // 'to_eliminate_imgs.min' => 'Sube al menos 2 imagenes',
             'to_eliminate_imgs.*.mimes' => 'No se permite el formato subido',
             'new_imgs.*.mimes' => 'No se permite el formato subido',
             'to_eliminate_imgs.*.distinct' => 'Este archvio ya ha sido cargado',
