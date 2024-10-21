@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreStateRequest;
 use App\Http\Requests\UpdateStateRequest;
-use Illuminate\Http\Request;
+use App\Models\UbicacionEstado;
 use App\Models\Estado;
 
 class AdminStateController extends Controller
@@ -57,7 +57,21 @@ class AdminStateController extends Controller
             $state -> triptico = basename($request -> file('triptico') -> storeAs('tripticos',  time() . '-' . $triptico_name, 'public'));
         }
 
+        $coords = getCoordinates($request->nombre);
+        if (!$coords) {
+            return redirect()
+                    -> back()
+                    -> withInput()
+                    -> withErrors(['nombre' => 'No existen coordenadas para el nombre del estado ingresado']);
+        }
+
+        $location = new UbicacionEstado();
+        $location -> latitud = $coords['lat'];
+        $location -> longitud = $coords['lng'];
+
         $state -> save();
+        $location -> idEstadoRepublica = $state -> idEstadoRepublica;
+        $location -> save();
 
         return redirect() -> route('admin.states.show', compact('state'));
     }
@@ -111,7 +125,21 @@ class AdminStateController extends Controller
             $state -> triptico = basename($request -> file('triptico') -> storeAs('tripticos',  time() . '-' . $triptico_name, 'public'));
         }
 
+        $coords = getCoordinates($request->nombre);
+        if (!$coords) {
+            return redirect()
+                    -> back()
+                    -> withInput()
+                    -> withErrors(['nombre' => 'No existen coordenadas para el estado ingresado']);
+        }
+
+        $location = UbicacionEstado::where('idEstadoRepublica', $state -> idEstadoRepublica) -> first();
+        $location -> latitud = $coords['lat'];
+        $location -> longitud = $coords['lng'];
+
         $state -> update();
+        $location -> idEstadoRepublica = $state -> idEstadoRepublica;
+        $location -> update();
 
         return redirect() -> route('admin.states.show', compact('state'));
     }

@@ -29,6 +29,7 @@ class UpdateCultureRequest extends FormRequest
                 'string',
                 'max:80',
                 'regex:/^[\pL\s]+$/u',
+                Rule::unique('culture', 'nombre') -> ignore($this -> route('culture') -> idCultura, 'idCultura'),
             ],
             'periodo' => 'required|max:255',
             'significado' => 'required|alpha_num:ascii',

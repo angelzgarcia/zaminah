@@ -23,7 +23,7 @@ class StoreStateRequest extends FormRequest
     {
         return [
             'nombre' => 'required|string|max:50|unique:estados,nombre|regex: /^[\pL\s]+$/u',
-            'capital' => 'required|string|max:60|unique:estados,capital|regex:/^[pL\s]+$/u',
+            'capital' => 'required|string|max:60|unique:estados,capital|regex: /^[\pL\s]+$/u',
             'video' => 'required|string|unique:estados,video',
             'foto' => 'required|image|mimes:jpg,jpeg,png,webp',
             'triptico' => 'required|file|mimes:pdf',

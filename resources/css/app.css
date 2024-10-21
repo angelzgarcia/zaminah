@@ -9,7 +9,57 @@ body, html, .main-container {
     scrollbar-color: #ccbcae #9b7c62;
 }
 
-/* h1, h2, h3 { padding: 0; margin: 0; } */
+#info-box {
+    padding: 10px 0;
+    display: flex;
+    flex-direction: column;
+    /* gap: .3em; */
+    z-index: 100000;
+    font-family: Arial, sans-serif;
+}
+
+.info-title {
+    font-weight: bold;
+}
+
+.info-content {
+    margin-top: 5px;
+}
+
+/* SWEET ALERTS STYLES */
+.colored-toast.swal2-icon-success {
+    background-color: #a5dc86 !important;
+}
+
+.colored-toast.swal2-icon-error {
+    background-color: #f27474 !important;
+}
+
+.colored-toast.swal2-icon-warning {
+    background-color: #f8bb86 !important;
+}
+
+.colored-toast.swal2-icon-info {
+    background-color: #3fc3ee !important;
+}
+
+.colored-toast.swal2-icon-question {
+    background-color: #87adbd !important;
+}
+
+.colored-toast .swal2-title {
+    color: white;
+}
+
+.colored-toast .swal2-close {
+    color: white;
+}
+
+.colored-toast .swal2-html-container {
+    color: white;
+}
+
+
 
 .body-users { padding-top: 1em; }
 
@@ -210,7 +260,8 @@ footer {
     left: 0;
     flex-direction: column;
     gap: 1em;
-    background-color: #9b7c62;
+    /* background-color: #9b7c62; */
+    background-color: #816954;
     padding-bottom: 1em;
     z-index: 100000;
     overflow-y: auto;
@@ -313,7 +364,7 @@ footer {
     }
     & .acceso-tablas {
         align-self: flex-end;
-        background-color: #725c48;
+        background-color: #64503e;
         border-radius: .5em 0 0 .5em;
         display: flex;
         justify-content: start;
@@ -321,6 +372,8 @@ footer {
         gap: 1em;
         padding: 0 2em 0 1em;
         margin: 1em 0;
+        transition: all .2s;
+        border: 1px solid transparent;
         & a {
             display: flex;
             justify-content: space-between;
@@ -332,7 +385,8 @@ footer {
             text-decoration: none;
         }
         &:hover {
-            background-color: #64503e;
+            background-color: #584738;
+            border: 1px solid rgba(255, 255, 255, 0.507);
         }
     }
 }
@@ -354,13 +408,14 @@ footer {
             display: flex;
             justify-content: end;
             align-items: center;
-            gap: 2em;
+            height: 8vh;
+            gap: 1em;
             background-color: #611232;
-            & .welcome-respect { color: #c4baae; }
+            & .welcome-respect { color: #c4baae; font-size: 1.3em; }
             & .profile-acces-container {
                 /* background-color: #611232; */
                 border-radius: 2em 0 0 2em;
-                height: 9vh;
+                /* height: 9vh; */
                 min-width: 20%;
                 display: flex;
                 padding: 0 1em;
@@ -371,7 +426,7 @@ footer {
                     text-transform: uppercase;
                     margin: 0;
                     color: #fff;
-                    font-size: 1.3em;
+                    font-size: 1em;
                 }
                 & .avatar-admin  {
                     display: flex;

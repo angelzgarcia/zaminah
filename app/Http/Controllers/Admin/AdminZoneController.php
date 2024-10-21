@@ -106,6 +106,9 @@ class AdminZoneController extends Controller
         $states = Estado::orderBy('nombre', 'asc') -> get();
         $cultures = Cultura::orderBy('nombre', 'asc') -> get();
         $img_zone_count = ZonaImagen::where('idZonaArqueologica', $zone->idZonaArqueologica) -> count();
+        $current_state = Estado::select('idEstadoRepublica') -> where('idEstadoRepublica', $zone->idEstadoRepublica) -> first();
+        $current_culture = Cultura::select('idCultura') -> where('idCultura', $zone->idCultura) -> first();
+        $location = UbicacionZona::where('idZonaArqueologica', $zone->idZonaArqueologica) -> first();
 
         $horario = explode(' ', $zone->horario);
         for ($i = 0; $i < count($horario); $i++) $horario[$i];
@@ -113,7 +116,7 @@ class AdminZoneController extends Controller
         $de_hora = $horario[6];
         $a_hora = $horario[count($horario)-2];
 
-        return view('admin.zones.edit', compact('zone', 'states', 'cultures', 'de_hora', 'a_hora', 'img_zone_count'));
+        return view('admin.zones.edit', compact('zone', 'states', 'cultures', 'current_state', 'current_culture', 'de_hora', 'a_hora', 'img_zone_count', 'location'));
     }
 
     /**
@@ -130,8 +133,11 @@ class AdminZoneController extends Controller
         $zone -> idEstadoRepublica = $request -> estado;
         $zone -> idCultura = $request -> cultura;
 
+        $zone -> update();
+
         $count_current_imgs = ZonaImagen::where('idZonaArqueologica', $zone -> idZonaArqueologica) -> count();
 
+        // NUEVAS IMAGENES
         if ($request -> hasFile('new_imgs')):
             $count_new_imgs = $request -> new_imgs;
             $count_new_imgs = count($count_new_imgs);
@@ -152,6 +158,7 @@ class AdminZoneController extends Controller
             endif;
         endif;
 
+        // ACTUALIZAR IMAGENES
         if ($request -> current_imgs_dec):
             foreach ($request -> current_imgs_dec as $id_enc => $id_dec):
                 if ($id_enc != hash_img($id_dec)) {
@@ -170,9 +177,12 @@ class AdminZoneController extends Controller
             endforeach;
         endif;
 
-        $t_e_i = $request -> to_eliminate_imgs;
-        if ($t_e_i):
-            if (($count_current_imgs < 3) || ($count_current_imgs - count($t_e_i) < 2)) {
+        // ELIMINAR IMAGENES
+        if ($request -> hasFile('to_eliminate_imgs')):
+            $count_eliminate_imgs = $request -> to_eliminate_imgs;
+            $count_eliminate_imgs = count($count_eliminate_imgs);
+
+            if (($count_current_imgs < 3) || ($count_current_imgs - $count_eliminate_imgs < 2)) {
                 return redirect()
                         -> back()
                         -> withInput()
@@ -192,6 +202,15 @@ class AdminZoneController extends Controller
                 }
             endforeach;
         endif;
+
+        $current_location = UbicacionZona::where('idZonaArqueologica', $zone->idZonaArqueologica) -> first();
+        $direccion = $request -> direccion;
+        $location = getCoordinates($direccion);
+
+        $current_location -> latitud = $location['lat'];
+        $current_location -> longitud = $location['lng'];
+
+        $current_location -> update();
 
         return view('admin.zones.show', compact('zone'));
     }
