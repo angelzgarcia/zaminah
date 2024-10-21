@@ -6,9 +6,9 @@
 
 @section('admin-content')
 
-    <h2><a href="{{route('admin.states.index')}}">Volver a los estados</a></h2>
-    <h2><a href="{{route('admin.states.edit', $state)}}">Editar</a></h2>
-    <form action="{{route("admin.states.destroy", $state)}}" method="POST">
+    <h2><a href="{{route('admin.estados.index')}}">Volver a los estados</a></h2>
+    <h2><a href="{{route('admin.estados.edit', $state)}}">Editar</a></h2>
+    <form action="{{route("admin.estados.destroy", $state)}}" method="POST">
         @csrf
         @method('delete')
         <button type="submit">Eliminar</button>

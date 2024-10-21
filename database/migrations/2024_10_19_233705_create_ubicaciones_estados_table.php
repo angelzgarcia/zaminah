@@ -20,6 +20,7 @@ return new class extends Migration
                     -> unique()
                     -> constrained('estados', 'idEstadoRepublica')
                     -> onDelete('cascade');
+
             $table->timestamps();
         });
     }

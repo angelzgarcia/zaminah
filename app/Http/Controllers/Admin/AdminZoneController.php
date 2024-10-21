@@ -7,6 +7,7 @@ use \Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreZoneRequest;
 use App\Http\Requests\UpdateZoneRequest;
 use App\Models\Cultura;
+use App\Models\CulturaEstado;
 use App\Models\Estado;
 use App\Models\UbicacionZona;
 use App\Models\ZonaImagen;
@@ -20,7 +21,7 @@ class AdminZoneController extends Controller
     public function index()
     {
         $zones = Zona::orderBy('idZonaArqueologica', 'desc') -> paginate();
-        return view('admin.zones.index', compact('zones'));
+        return view('admin.zonas.index', compact('zones'));
     }
 
     /**
@@ -31,7 +32,7 @@ class AdminZoneController extends Controller
         $states = Estado::orderBy('nombre', 'asc') -> get();
         $cultures = Cultura::orderBy('nombre', 'asc') -> get();
 
-        return view('admin.zones.create', compact('states', 'cultures'));
+        return view('admin.zonas.create', compact('states', 'cultures'));
     }
 
     /**
@@ -74,14 +75,20 @@ class AdminZoneController extends Controller
 
             $direccion = $request -> direccion;
             $coordenadas = getCoordinates($direccion);
-
             $ubicacion -> latitud = $coordenadas['lat'];
             $ubicacion -> longitud = $coordenadas['lng'];
             $ubicacion -> idZonaArqueologica = $zone -> idZonaArqueologica;
             $ubicacion -> save();
+
+
+            $culture_state = new CulturaEstado();
+
+            $culture_state -> idCultura = $request -> cultura;
+            $culture_state -> idEstadoRepublica = $request -> estado;
+            $culture_state -> save();
         }
 
-        return view('admin.zones.show', compact('zone'));
+        return view('admin.zonas.show', compact('zone'));
     }
 
     /**
@@ -90,9 +97,9 @@ class AdminZoneController extends Controller
     public function show(Zona $zone)
     {
         if (!$zone)
-            return redirect() -> route('admin.zones.index');
+            return redirect() -> route('admin.zonas.index');
 
-        return view('admin.zones.show', compact('zone'));
+        return view('admin.zonas.show', compact('zone'));
     }
 
     /**
@@ -101,7 +108,7 @@ class AdminZoneController extends Controller
     public function edit(Zona $zone)
     {
         if (!$zone)
-            return redirect() -> route('admin.zones.index');
+            return redirect() -> route('admin.zonas.index');
 
         $states = Estado::orderBy('nombre', 'asc') -> get();
         $cultures = Cultura::orderBy('nombre', 'asc') -> get();
@@ -116,7 +123,7 @@ class AdminZoneController extends Controller
         $de_hora = $horario[6];
         $a_hora = $horario[count($horario)-2];
 
-        return view('admin.zones.edit', compact('zone', 'states', 'cultures', 'current_state', 'current_culture', 'de_hora', 'a_hora', 'img_zone_count', 'location'));
+        return view('admin.zonas.edit', compact('zone', 'states', 'cultures', 'current_state', 'current_culture', 'de_hora', 'a_hora', 'img_zone_count', 'location'));
     }
 
     /**
@@ -212,7 +219,12 @@ class AdminZoneController extends Controller
 
         $current_location -> update();
 
-        return view('admin.zones.show', compact('zone'));
+        $culture_state = CulturaEstado::where('idCultura', $request -> cultura) -> where('idEstadoRepublica', $request -> estado) -> first();
+        $culture_state -> idCultura = $request -> cultura;
+        $culture_state -> idEstado = $request -> estado;
+        $culture_state -> save();
+
+        return view('admin.zonas.show', compact('zone'));
     }
 
     /**
@@ -222,6 +234,6 @@ class AdminZoneController extends Controller
     {
         $zone -> delete();
 
-        return redirect() -> route('admin.zones.index');
+        return redirect() -> route('admin.zonas.index');
     }
 }

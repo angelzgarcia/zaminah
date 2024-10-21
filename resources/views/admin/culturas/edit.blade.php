@@ -4,12 +4,12 @@
 @section('titulo', 'Editar | INAH | Admin')
 
 @section('admin-content')
-    <h2><a href="{{route('admin.cultures.index')}}">Volver a las culturas</a></h2>
-    <h2><a href="{{route('admin.cultures.show', $culture->idCultura)}}">Volver</a></h2>
+    <h2><a href="{{route('admin.culturas.index')}}">Volver a las culturas</a></h2>
+    <h2><a href="{{route('admin.culturas.show', $culture->idCultura)}}">Volver</a></h2>
 
     <h1>VAS A EDITAR LA CULTURA <em><big>"{{$culture->idCultura}}"</big></em></h1>
 
-    <form action="{{route('admin.cultures.update', $culture)}}" method="POST" enctype="multipart/form-data">
+    <form action="{{route('admin.culturas.update', $culture)}}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('put')
 
@@ -17,25 +17,25 @@
         <fieldset>
             <legend>Nombre</legend>
             <input type="text" name="nombre" value="{{old('nombre', $culture->nombre)}}" >
-            @if ($errors -> has('nombre'))
-                <div class="error">{{ $errors -> first('nombre') }}</div>
-            @endif
+            @error ('nombre')
+                <div class="error">{{ $message }}</div>
+            @enderror
         </fieldset>
         {{-- PERIODO --}}
         <fieldset>
             <legend>Periodo</legend>
             <textarea name="periodo" id="" cols="30" rows="10" >{{old('periodo', $culture->periodo)}}</textarea>
-            @if ($errors -> has('periodo'))
-                <div class="error">{{$errors -> first('periodo')}}</div>
-            @endif
+            @error ('periodo')
+                <div class="error">{{ $message }}</div>
+            @enderror
         </fieldset>
         {{-- SIGNIFICADO --}}
         <fieldset>
             <legend>Significado</legend>
             <textarea name="significado" id="" cols="30" rows="10" >{{old('significado', $culture->significado)}}</textarea>
-            @if ($errors -> has('significado'))
-                <div class="error">{{$errors -> first('significado')}}</div>
-            @endif
+            @error ('significado')
+                <div class="error">{{ $message }}</div>
+            @enderror
         </fieldset>
         {{-- DESCRIPCION --}}
         <fieldset>
@@ -49,9 +49,9 @@
         <fieldset>
             <legend>Aportaciones</legend>
             <textarea name="aportaciones" id="" cols="30" rows="10" >{{old('aportaciones', $culture->aportaciones)}}</textarea>
-            @if ($errors -> has('aportaciones'))
-                <div class="error">{{$errors -> first('aportaciones')}}</div>
-            @endif
+            @error ('aportaciones')
+                <div class="error">{{ $message }}</div>
+            @enderror
         </fieldset>
         {{-- FOTOS --}}
         <fieldset>

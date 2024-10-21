@@ -4,7 +4,7 @@
 @section('titulo', 'Añadir estado | INAH')
 
 @section('admin-content')
-    <form action="{{route('admin.states.store')}}" method="POST" enctype="multipart/form-data">
+    <form action="{{route('admin.estados.store')}}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <h2>Agrega un estado</h2>

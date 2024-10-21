@@ -6,9 +6,9 @@
 
 @section('admin-content')
 
-    <h2><a href="{{route('admin.zones.index')}}">Volver a las zonas</a></h2>
-    <h2><a href="{{route('admin.zones.edit', $zone)}}">Editar</a></h2>
-    <form action="{{route("admin.zones.destroy", $zone)}}" method="POST">
+    <h2><a href="{{route('admin.zonas.index')}}">Volver a las zonas</a></h2>
+    <h2><a href="{{route('admin.zonas.edit', $zone)}}">Editar</a></h2>
+    <form action="{{route("admin.zonas.destroy", $zone)}}" method="POST">
         @csrf
         @method('delete')
         <button type="submit">Eliminar</button>

@@ -8,7 +8,7 @@
 @section('titulo', 'Añadir zona | INAH')
 
 @section('admin-content')
-    <form action="{{route('admin.zones.store')}}" method="POST" autocomplete="off" enctype="multipart/form-data" onload="initMap()">
+    <form action="{{route('admin.zonas.store')}}" method="POST" autocomplete="off" enctype="multipart/form-data" onload="initMap()">
         @csrf
 
         <h2>Agrega una zona arqueologica</h2>
