@@ -24,8 +24,8 @@ class AdminHomeController extends Controller
 
     public function show_database() {
         $tables = DB::select('SHOW TABLES');
-        $databse_name = env('DB_DATABASE');
-        $column_name = "Tables_in_{$databse_name}";
+        $database_name = env('DB_DATABASE');
+        $column_name = "Tables_in_{$database_name}";
 
         $tables_with_counts = [];
 
@@ -41,7 +41,8 @@ class AdminHomeController extends Controller
 
         return view('admin.database', [
             'tables_and_counts' => $tables_with_counts,
-            'tables_count' => count($tables_with_counts)
+            'tables_count' => count($tables_with_counts),
+            'database_name' => $database_name
         ]);
     }
 

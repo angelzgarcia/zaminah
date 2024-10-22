@@ -20,6 +20,12 @@
         }
     }
 
+    if (!function_exists('img_p_url')) {
+        function img_p_url($filename) {
+            return asset("storage/img/profiles/$filename");
+        }
+    }
+
     function hash_img($img) {
         return hash_hmac('sha256', base64_encode($img), env('APP_KEY'));
     }

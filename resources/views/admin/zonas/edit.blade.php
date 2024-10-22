@@ -9,7 +9,7 @@
 
 @section('admin-content')
 
-    <form action="{{route('admin.zonas.update', $zone)}}" method="POST" autocomplete="off" enctype="multipart/form-data" onload="initMap()>
+    <form action="{{route('admin.zonas.update', $zone)}}" method="post" autocomplete="off" enctype="multipart/form-data" onload="initMap()">
         @csrf
         @method('put')
 

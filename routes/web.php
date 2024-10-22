@@ -73,9 +73,11 @@ Route::controller(AdminZoneController::class) -> prefix('admin/zones') -> group(
 // RUTAS PARA REGISTROS DE USUARIOS
 Route::controller(AdminUserController::class) -> prefix('users')-> group(function () {
     Route::get('', 'index')-> name('admin.usuarios.index');
-    Route::get('{id}', 'show') -> name('admin.usuarios.show');
-    Route::get('edit/{id}', 'edit') -> name('admin.usuarios.edit');
-    Route::put('{id}', 'update') -> name('admin.usuarios.update');
+    Route::get('create', 'create') -> name('admin.usuarios.create');
+    Route::post('', 'store') -> name('admin.usuarios.store');
+    Route::get('{user}', 'show') -> name('admin.usuarios.show');
+    Route::get('{user}/edit', 'edit') -> name('admin.usuarios.edit');
+    Route::put('{user}', 'update') -> name('admin.usuarios.update');
 });
 
 // RUTAS PARA REGISTROS DE RESEÑAS

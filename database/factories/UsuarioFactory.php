@@ -28,7 +28,7 @@ class UsuarioFactory extends Factory
         // }
 
         return [
-            'google_id' => fake() -> unique() -> randomNumber(8, true),
+            'google_id' => fake() -> unique() -> numerify('############'),
             'nombre' => fake() -> name(),
             'genero' => fake() -> randomElement(['Masculino', 'Femenino']),
             'foto' => fake() -> imageUrl(),
@@ -36,7 +36,7 @@ class UsuarioFactory extends Factory
             'numero' => fake() -> unique() -> e164PhoneNumber(),
             'password' => static::$password ??= Hash::make('password'),
             'token' => Str::random(10),
-            'confirmado' => fake() -> randomElement([0,1]),
+            'confirmado' => fake() -> randomElement([0, 1]),
             'status' => fake() -> randomElement(['activo', 'inactivo']),
 
             'idRol' => Rol::inRandomOrder()

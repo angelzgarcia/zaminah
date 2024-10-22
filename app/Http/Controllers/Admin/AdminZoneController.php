@@ -21,6 +21,7 @@ class AdminZoneController extends Controller
     public function index()
     {
         $zones = Zona::orderBy('idZonaArqueologica', 'desc') -> paginate();
+
         return view('admin.zonas.index', compact('zones'));
     }
 
@@ -140,8 +141,6 @@ class AdminZoneController extends Controller
         $zone -> idEstadoRepublica = $request -> estado;
         $zone -> idCultura = $request -> cultura;
 
-        $zone -> update();
-
         $count_current_imgs = ZonaImagen::where('idZonaArqueologica', $zone -> idZonaArqueologica) -> count();
 
         // NUEVAS IMAGENES
@@ -210,6 +209,8 @@ class AdminZoneController extends Controller
             endforeach;
         endif;
 
+        $zone -> update();
+
         $current_location = UbicacionZona::where('idZonaArqueologica', $zone->idZonaArqueologica) -> first();
         $direccion = $request -> direccion;
         $location = getCoordinates($direccion);
@@ -221,7 +222,7 @@ class AdminZoneController extends Controller
 
         $culture_state = CulturaEstado::where('idCultura', $request -> cultura) -> where('idEstadoRepublica', $request -> estado) -> first();
         $culture_state -> idCultura = $request -> cultura;
-        $culture_state -> idEstado = $request -> estado;
+        $culture_state -> idEstadoRepublica = $request -> estado;
         $culture_state -> save();
 
         return view('admin.zonas.show', compact('zone'));

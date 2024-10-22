@@ -13,20 +13,21 @@ return new class extends Migration
     {
         Schema::create('usuarios', function (Blueprint $table) {
             $table -> id('idUsuario');
-            $table -> unsignedBigInteger('google_id') -> unique();
+            $table -> unsignedBigInteger('google_id') -> nullable() -> unique();
             $table -> string('nombre', 80);
-            $table -> string('genero', 10);
-            $table -> string('foto');
+            $table -> string('genero', 10) -> nullable();
+            $table -> string('foto') -> nullable();
             $table -> string('email', 60) -> unique();
-            $table -> unsignedBigInteger('numero') -> unique();
-            $table -> string('password');
-            $table -> string('token', 10);
+            $table -> unsignedBigInteger('numero') -> nullable() -> unique();
+            $table -> string('password') -> nullable();
+            $table -> string('token', 10) -> nullable();
             $table -> unsignedTinyInteger('confirmado');
             $table -> enum('status', ['activo', 'inactivo']);
 
             $table -> foreignId('idRol')
                     -> constrained('roles', 'idRol')
                     -> onDelete('cascade');
+
             $table -> timestamps();
         });
     }

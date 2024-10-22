@@ -16,7 +16,7 @@ class AdminStateController extends Controller
     public function index()
     {
         // $states = new Estado();
-        $states = Estado::orderBy('nombre', 'asc') -> paginate();
+        $states = Estado::orderBy('idEstadoRepublica', 'desc') -> paginate();
 
         return view('admin.estados.index', compact('states'));
     }

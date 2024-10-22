@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Resenia extends Model
 {
@@ -24,4 +25,11 @@ class Resenia extends Model
         return $this -> belongsTo(Zona::class, 'idZonaArqueologica', 'idZonaArqueologica');
     }
 
+    public function mensaje() {
+        return new Attribute(
+            set: fn($mensaje) => strtolower($mensaje),
+            get: fn($mensaje) => ucwords($mensaje)
+        );
+    }
+    
 }
