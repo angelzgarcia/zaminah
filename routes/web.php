@@ -78,7 +78,7 @@ Route::controller(AdminZoneController::class) -> prefix('admin/zones') -> group(
 });
 
 // RUTAS PARA REGISTROS DE USUARIOS
-Route::controller(AdminUserController::class) -> prefix('users')-> group(function () {
+Route::controller(AdminUserController::class) -> prefix('admin/users')-> group(function () {
     Route::get('', 'index')-> name('admin.usuarios.index');
     Route::get('create', 'create') -> name('admin.usuarios.create');
     Route::post('', 'store') -> name('admin.usuarios.store');

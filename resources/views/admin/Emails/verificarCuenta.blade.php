@@ -18,7 +18,7 @@
                     <div class="error">{{$message}}</div>
                 @enderror
             </fieldset>
-            <button type="submit">Verificar</button>
+            <button type="submit">Validar</button>
         </form>
     </div>
 </body>

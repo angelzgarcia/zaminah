@@ -11,15 +11,13 @@
     }
 </style>
 <body>
-    <form action="http://localhost/zaminah/public/verify-admin-account" method="POST" autocomplete="off">
-
-    </form>
     <h1 class="h1-mail">Bienvenido a la plataforma</h1>
     <p>Tu cuenta ha sido creada con éxito. A continuación, encontrarás tu contraseña temporal y tu token de verificación.</p>
-
     <p><strong>Contraseña Temporal:</strong> {{ $password }}</p>
     <p><strong>Token de Verificación:</strong> {{ $token }}</p>
 
     <p>Por favor, verifica tu cuenta utilizando el token.</p>
+
+    <a href="http://localhost/zaminah/public/verify-admin-account">Verificar</a>
 </body>
 </html>

@@ -3,6 +3,12 @@
 
 @section('titulo', 'Dashboard | INAH')
 
+@section('welcome-admin')
+    {{$user->genero == 'masculino' ? 'Bienvenido' : 'Bienvenida' }}
+@endsection
+
+@section('admin-name', $user->nombre)
+
 @section('admin-content')
 
     <section class="dashboard-container">

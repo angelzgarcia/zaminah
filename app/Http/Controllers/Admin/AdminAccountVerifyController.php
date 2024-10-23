@@ -45,12 +45,12 @@ class AdminAccountVerifyController extends Controller
         $request -> validate([ 'token' => 'required|alpha_num|max:10|min:8']);
 
         $user = Usuario::where('token', $request -> token)
-                        // -> where('idRol', 1)
-                        // -> where('status', 'inactivo')
+                        -> where('idRol', 1)
+                        -> where('status', 'inactivo')
                         -> first();
 
         if ($user) {
-            $user -> status = 'activo';
+            // $user -> status = 'activo';
             $user -> confirmado = 1;
             $user -> update();
             return view('admin.Emails.cambiarContrasenia', compact('user'));
@@ -75,7 +75,21 @@ class AdminAccountVerifyController extends Controller
      */
     public function update(Request $request)
     {
+        $request -> validate([ 'password' => 'required|string|exists:usuarios,password', 'new_password' => 'required|string']);
 
+        $user = Usuario::where('password', $request -> password)
+                            -> where('confirmado', 1)
+                            -> where('idRol', 1)
+                            -> first();
+
+        if ($user) {
+            $user -> password = hashPassword($request -> new_password);
+            $user -> status = 'activo';
+            $user -> update();
+            return view('admin.dashboard', compact('user'));
+        }
+
+        return redirect() -> back() -> withInput() -> withErrors(['password' => 'Contraseña incorrecta']);
     }
 
     /**

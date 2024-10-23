@@ -81,6 +81,7 @@ class AdminUserController extends Controller
         Mail::to($request -> email)
                 -> send(new VerificarAdminMailable($password, $token));
 
+        // return redirect() -> back();
         return view('admin.usuarios.show', compact('user'));
     }
 
