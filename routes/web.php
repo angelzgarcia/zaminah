@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminAccountVerifyController;
 use App\Http\Controllers\Admin\AdminCultureController;
 use App\Http\Controllers\Admin\AdminReviewController;
 use App\Http\Controllers\Admin\AdminStateController;
@@ -36,6 +37,12 @@ Route::controller(AdminHomeController::class) -> prefix('admin')->group(function
     Route::get('ubicaciones_estados', 'show_states_locations') -> name('admin.ubicaciones_estados.index');
 });
 
+// RUTAS PARA VERIFICAR LA CUENTA DE UN ADMINISTRADOR
+Route::controller(AdminAccountVerifyController::class) -> prefix('verify-admin-account') -> group(function() {
+    Route::get('', 'index') -> name('admin.verify_account.index');
+    Route::put('',  'verify') -> name('admin.verify_account.verify');
+    Route::put('update', 'update') -> name('admin.verify_account.update');
+});
 
 // RUTAS PARA REGISTROS DE CULTURAS
 Route::controller(AdminCultureController::class) -> prefix('admin/cultures') -> group(function() {

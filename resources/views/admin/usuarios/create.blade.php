@@ -56,7 +56,7 @@
             @enderror
         </fieldset>
 
-        <fieldset>
+        {{-- <fieldset>
             <legend>Contraseña temporal</legend>
             <input type="password" name="password" id="pass" value="{{old('pass')}}">
             @error ('password')
@@ -70,7 +70,7 @@
             @error ('conf_password')
                 <div class="error">{{$message}}</div>
             @enderror
-        </fieldset>
+        </fieldset> --}}
 
         <button type="submit">Guardar</button>
     </form>

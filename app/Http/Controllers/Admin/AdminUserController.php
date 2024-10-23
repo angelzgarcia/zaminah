@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
+use App\Mail\VerificarAdminMailable;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class AdminUserController extends Controller
 {
@@ -65,15 +68,18 @@ class AdminUserController extends Controller
 
         $user -> email = $request -> email;
         $user -> numero = $request -> numero;
-        $request -> password != $request -> conf_password ? $user -> password = $request -> conf_password : redirect() -> back() -> withInput() -> withErrors(['password', 'Las contraseñas no coindicen']);
-        $user -> token = '';
-
-        // ENVIAR UN MENSAJE AL PENDEJO DEL ADMIN NUEVO
-        $user -> confirmado = 1;
-        $user -> status = 'activo';
+        $password = hashPassword(Str::password(20, true, true, false, false));
+        // // $request -> password != $request -> conf_password ? $user -> password = $request -> conf_password : redirect() -> back() -> withInput() -> withErrors(['password', 'Las contraseñas no coindicen']);
+        $user -> password = $password;
+        $token = bin2hex(random_bytes(4));
+        $user -> token = $token;
+        $user -> confirmado = 0;
+        $user -> status = 'inactivo';
         $user -> idRol = 1;
-
         $user -> save();
+
+        Mail::to($request -> email)
+                -> send(new VerificarAdminMailable($password, $token));
 
         return view('admin.usuarios.show', compact('user'));
     }

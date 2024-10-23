@@ -9,6 +9,7 @@ body, html, .main-container {
     scrollbar-color: #ccbcae #9b7c62;
 }
 
+/* ESTILOS PARA LAS COORDENADAS DEL FORMULARIO ZONAS Y ESTADOS */
 #info-box {
     padding: 10px 0;
     display: flex;
@@ -58,7 +59,6 @@ body, html, .main-container {
 .colored-toast .swal2-html-container {
     color: white;
 }
-
 
 
 .body-users { padding-top: 1em; }

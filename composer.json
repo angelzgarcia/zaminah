@@ -27,7 +27,8 @@
         "files": [
             "app/helpers/coordsHelper.php",
             "app/helpers/imageHelper.php",
-            "app/helpers/pdfHelper.php"
+            "app/helpers/pdfHelper.php",
+            "app/helpers/hashingHelper.php"
         ]
     },
     "autoload-dev": {
