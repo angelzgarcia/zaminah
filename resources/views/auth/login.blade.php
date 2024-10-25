@@ -8,7 +8,7 @@
 </head>
 <body>
 
-    <h1>COSITAS</h1>
+    <h1>LOGIN</h1>
     <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi exercitationem facere dolor repudiandae modi, fuga minus magni totam iure perspiciatis ipsum numquam saepe repellat, illum eaque reprehenderit explicabo aperiam dolorem.
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi exercitationem facere dolor repudiandae modi, fuga minus magni totam iure perspiciatis ipsum numquam saepe repellat, illum eaque reprehenderit explicabo aperiam dolorem.

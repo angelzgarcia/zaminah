@@ -6,7 +6,9 @@ use App\Http\Controllers\Admin\AdminReviewController;
 use App\Http\Controllers\Admin\AdminStateController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminZoneController;
+use App\Http\Controllers\User\UserContactUsController;
 use App\Http\Controllers\User\UserProfileController;
+use App\Http\Controllers\User\UserQuizzController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminHomeController;
 use App\Http\Controllers\Auth\GoogleAuthController;
@@ -14,6 +16,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\User\UserCultureController;
 use App\Http\Controllers\User\UserHomeController;
 use App\Http\Controllers\User\UserLoginController;
+use App\Http\Controllers\User\UserReviewController;
 use App\Http\Controllers\User\UserStateController;
 use App\Http\Controllers\User\UserZoneController;
 
@@ -22,6 +25,9 @@ use App\Http\Controllers\User\UserZoneController;
 // RUTAS PARA EL INDEX
 Route::controller(UserHomeController::class) -> prefix('/') -> group(function() {
     Route::get('', 'index') -> name('home');
+    Route::get('mapa-estados', 'show_mapa_estados') -> name('mapa-estados');
+    Route::get('mapa-zonas', 'show_mapa_zonas') -> name('mapa-zonas');
+    Route::get('nosotros', 'show_nosotros') -> name('nosotros');
 });
 
 // RUTAS PARA VISTAS DE ZONAS
@@ -42,7 +48,23 @@ Route::controller(UserCultureController::class) -> prefix('culturas') -> group(f
 
 // RUTAS PARA EL PERFIL
 Route::controller(UserProfileController::class) -> prefix('profile') -> group(function() {
-    Route::get('', 'index') -> name('user.profile.inedx');
+    Route::get('', 'index') -> name('user.profile.index');
+});
+
+// RUTAS PARA EL QUIZZ
+Route::controller(UserQuizzController::class) -> prefix('quizz') -> group(function() {
+    Route::get('', 'index') -> name('user.quizz.index');
+});
+
+// RUTAS PARA EL FORO
+Route::controller(UserReviewController::class) -> prefix('foro') -> group(function() {
+    Route::get('', 'index') -> name('user.foro.index');
+});
+
+// RUTAS PARA EL FORM DE  CONTACTO
+Route::controller(UserContactUsController::class) -> prefix('contactanos') -> group(function() {
+    Route::get('', 'index') -> name('user.contactanos.index');
+    Route::post('', 'store') -> name('user.contactanos.store');
 });
 
 

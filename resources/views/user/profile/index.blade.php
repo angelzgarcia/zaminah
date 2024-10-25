@@ -9,5 +9,7 @@
 <body>
     <h1>¡Haz iniciado sesión! Bienvenid@ a tu perfil</h1>
     PERFIL DEL USUARIO
+    <br>
+    <a href="{{route('home')}}">Volver</a>
 </body>
 </html>

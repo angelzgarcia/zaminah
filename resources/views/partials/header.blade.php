@@ -8,18 +8,33 @@
         <div class="links-nav">
             <ul>
                 <li>
-                    <a href="">
-                        Mapa
+                    <a href="{{route('mapa-estados')}}" class="{{request() -> routeIs('mapa-estados') ? 'active' : ''}}">
+                        Mapa de Estados
                     </a>
                 </li>
                 <li>
-                    <a href="">
+                    <a href="{{route('mapa-zonas')}}" class="{{request() -> routeIs('mapa-zonas') ? 'active' : ''}}">
+                        Mapa de Zonas
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('user.quizz.index')}}" class="{{request() -> routeIs('user.quizz.index') ? 'active' : ''}}">
                         Quizz
                     </a>
                 </li>
                 <li>
-                    <a href="">
+                    <a href="{{route('user.foro.index')}}" class="{{request() -> routeIs('user.foro.index') ? 'active' : ''}}">
                         Foro
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('nosotros')}}" class="{{request()->routeIs('nosotros') ? 'active' : ''}}">
+                        Nosotros
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('user.contactanos.index')}}" class="{{request()->routeIs('user.contactanos.index') ? 'active' : ''}}">
+                        Contactanos
                     </a>
                 </li>
                 <div class="circle-sesion-icon">

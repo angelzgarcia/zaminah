@@ -24,7 +24,7 @@ class GoogleAuthController extends Controller
                             -> first();
 
             if (!$user):
-                $new_user = Usuario::createOrUpdate([
+                $new_user = Usuario::create([
                     'google_id' => $google_user -> getId(),
                     'nombre' => $google_user -> getName(),
                     'genero' => null,
@@ -35,7 +35,7 @@ class GoogleAuthController extends Controller
                     'token' => null,
                     'confirmado' => 1,
                     'status' => 'activo',
-                    'idRol' => 2,
+                    'idRol' => 1,
                 ]);
 
                 Auth::login($new_user);

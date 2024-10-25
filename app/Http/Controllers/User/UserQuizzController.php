@@ -5,12 +5,12 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class UserReviewController extends Controller
+class UserQuizzController extends Controller
 {
 
     public function index()
     {
-        return view('user.foro.index');
+        return view('user.quizz.index');
     }
 
 }

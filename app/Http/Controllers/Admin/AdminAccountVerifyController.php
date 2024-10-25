@@ -42,7 +42,7 @@ class AdminAccountVerifyController extends Controller
 
     public function verify(Request $request)
     {
-        $request -> validate([ 'token' => 'required|alpha_num|max:10|min:8']);
+        $request -> validate(['token' => 'required|alpha_num|max:10|min:8']);
 
         $user = Usuario::where('token', $request -> token)
                         -> where('idRol', 1)
@@ -50,7 +50,6 @@ class AdminAccountVerifyController extends Controller
                         -> first();
 
         if ($user) {
-            // $user -> status = 'activo';
             $user -> confirmado = 1;
             $user -> update();
             return view('admin.Emails.cambiarContrasenia', compact('user'));
@@ -87,6 +86,7 @@ class AdminAccountVerifyController extends Controller
 
         if ($user) {
             $user -> password = hashPassword($request -> new_password);
+            $user -> idRol = 2;
             $user -> status = 'activo';
             $user -> update();
             return view('admin.dashboard', compact('user'));

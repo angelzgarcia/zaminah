@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verificar Cuenta de Administrador</title>
+    <style>
+        .h1-mail {
+            background-color: white;
+        }
+    </style>
 </head>
-<style>
-    .h1-mail {
-        background-color: white;
-    }
-</style>
 <body>
     <h1 class="h1-mail">Bienvenido a la plataforma</h1>
     <p>Tu cuenta ha sido creada con éxito. A continuación, encontrarás tu contraseña temporal y tu token de verificación.</p>
