@@ -81,8 +81,11 @@ class AdminStateController extends Controller
      */
     public function show(Estado $state)
     {
-        if (!$state)
-            return redirect() -> route('admin.estados.index');
+        $estado = Estado::where('idEstadoRepublica', $state->idEstadoRepublica) -> first();
+
+        if (!$estado) {
+            return redirect() -> route('admin.esados.index');
+        }
 
         return view('admin.estados.show', compact('state'));
     }

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Ubicacion;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Support\Str;
 
 // TABLA / MODELO actual: Zona
 // TABLA / MODELO relacionada: Ubicacion
@@ -17,6 +18,22 @@ class Zona extends Model
     protected $primaryKey = 'idZonaArqueologica';
 
     protected $guarded = [];
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saving(function($zona) {
+            if (!$zona->slug) {
+                $zona->slug = Str::slug($zona->nombre, '-');
+            }
+        });
+    }
 
 
     // relacion uno a uno. una zona TIENE una ubicacion

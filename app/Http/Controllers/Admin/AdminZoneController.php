@@ -64,10 +64,11 @@ class AdminZoneController extends Controller
         $zone -> idCultura = $request -> cultura;
 
         if ($request -> hasFile('fotos')) {
+            $zone -> save();
+
             foreach ($request -> file('fotos') as $img) {
                 $zonaFotos = new ZonaImagen();
                 $zonaFotos -> foto = basename(time() . '-' . $img -> store('img/uploads', 'public'));
-                $zone -> save();
                 $zonaFotos -> idZonaArqueologica = $zone -> idZonaArqueologica;
                 $zonaFotos -> save();
             }
@@ -76,17 +77,22 @@ class AdminZoneController extends Controller
 
             $direccion = $request -> direccion;
             $coordenadas = getCoordinates($direccion);
-            $ubicacion -> latitud = $coordenadas['lat'];
-            $ubicacion -> longitud = $coordenadas['lng'];
-            $ubicacion -> idZonaArqueologica = $zone -> idZonaArqueologica;
-            $ubicacion -> save();
+            if (!$coordenadas) {
+                return back()->with('error', 'No se pudieron obtener las coordenadas para la dirección proporcionada.');
+                
+            } else {
+                $ubicacion -> latitud = $coordenadas['lat'];
+                $ubicacion -> longitud = $coordenadas['lng'];
+                $ubicacion -> idZonaArqueologica = $zone -> idZonaArqueologica;
+                $ubicacion -> save();
 
 
-            $culture_state = new CulturaEstado();
+                $culture_state = new CulturaEstado();
 
-            $culture_state -> idCultura = $request -> cultura;
-            $culture_state -> idEstadoRepublica = $request -> estado;
-            $culture_state -> save();
+                $culture_state -> idCultura = $request -> cultura;
+                $culture_state -> idEstadoRepublica = $request -> estado;
+                $culture_state -> save();
+            }
         }
 
         return view('admin.zonas.show', compact('zone'));

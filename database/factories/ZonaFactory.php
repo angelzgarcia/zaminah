@@ -46,7 +46,7 @@ class ZonaFactory extends Factory
                 "Tanjay", "Tapaxco", "Tecamachalco", "Tepeapulco", "Tepecuacuilco", "Tepoztlán", "Texcatzingo", "Tlacopan", "Tlatilco",
                 "Tlayúa", "Tocuila", "Tonatico", "Uxul", "Villa Alta", "Yagul"
             ]),
-            // 'foto' => fake() -> imageUrl(),
+            // 'slug' => fake() -> slug(),
             'significado' => fake() -> sentences(2, true),
             'descripcion' => fake() -> paragraphs(3, true),
             'acceso' => fake() -> paragraphs(2, true),

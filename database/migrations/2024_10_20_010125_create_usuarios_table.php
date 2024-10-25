@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('usuarios', function (Blueprint $table) {
             $table -> id('idUsuario');
-            $table -> unsignedBigInteger('google_id') -> nullable() -> unique();
+            $table -> string('google_id') -> nullable() -> unique();
             $table -> string('nombre', 80);
             $table -> string('genero', 10) -> nullable();
             $table -> string('foto') -> nullable();
@@ -21,7 +21,7 @@ return new class extends Migration
             $table -> unsignedBigInteger('numero') -> nullable() -> unique();
             $table -> string('password') -> nullable();
             $table -> string('token', 10) -> nullable();
-            $table -> unsignedTinyInteger('confirmado');
+            $table -> boolean('confirmado') -> default(0);
             $table -> enum('status', ['activo', 'inactivo']);
 
             $table -> foreignId('idRol')

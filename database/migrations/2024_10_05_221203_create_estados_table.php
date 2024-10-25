@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('estados', function (Blueprint $table) {
             $table -> id('idEstadoRepublica');
             $table -> string('nombre', 35) -> unique();
+            // $table -> string('slug') -> unique();
             $table -> string('capital', 35) -> unique();
             $table -> string('foto');
             $table -> string('video') -> unique();

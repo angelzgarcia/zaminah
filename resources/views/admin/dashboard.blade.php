@@ -3,11 +3,11 @@
 
 @section('titulo', 'Dashboard | INAH')
 
-@section('welcome-admin')
+{{-- @section('welcome-admin')
     {{$user->genero == 'masculino' ? 'Bienvenido' : 'Bienvenida' }}
 @endsection
 
-@section('admin-name', $user->nombre)
+@section('admin-name', $user->nombre) --}}
 
 @section('admin-content')
 

@@ -75,7 +75,10 @@ class AdminAccountVerifyController extends Controller
      */
     public function update(Request $request)
     {
-        $request -> validate([ 'password' => 'required|string|exists:usuarios,password', 'new_password' => 'required|string']);
+        $request -> validate([
+            'password' => 'required|string|exists:usuarios,password',
+            'new_password' => 'required|string|regex:^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[¿?!¡\-._*])[A-Za-z\d¿?!¡\-._*]{8,}$'
+        ]);
 
         $user = Usuario::where('password', $request -> password)
                             -> where('confirmado', 1)

@@ -31,6 +31,7 @@ class EstadoFactory extends Factory
                 'San Luis Potosí', 'Sinaloa', 'Sonora', 'Tabasco', 'Tamaulipas', 'Tlaxcala',
                 'Veracruz', 'Yucatán', 'Zacatecas'
             ]),
+            // 'slug' => fake() -> slug(),
             'capital'=> fake() -> unique() -> city(),
             'foto' => fake() ->  imageUrl(),
             'video'=> fake() -> url(),

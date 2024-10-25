@@ -5,13 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Usuario extends Model
+
+class Usuario extends Authenticatable
 {
     use HasFactory;
 
     protected $primaryKey = 'idUsuario';
-    protected $guarded = ['google_id', 'token', 'confirmado', 'status', 'idRol'];
+    protected $guarded = [];
 
     public function rol() {
         return $this -> belongsTo(Rol::class, 'idRol', 'idRol');

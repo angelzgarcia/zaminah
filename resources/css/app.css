@@ -78,7 +78,7 @@ body, html, .main-container {
         justify-content: space-between;
         padding-right: 3em;
         align-items: center;
-        & img { height: inherit; padding: 0 .5em; }
+        & a { height: inherit; padding: 0 .5em; & img { height: inherit; } }
         & .links-nav ul {
             display: flex;
             justify-content: center;
@@ -204,6 +204,7 @@ footer {
     padding: 2em 0;
     /* justify-content: center; */
     align-items: center;
+    & a { color: #fff; text-decoration-color: #bc955b; &:hover { text-decoration-color: goldenrod; } }
     & .estados-home, .zonas-home, .culturas-home {
         width: 90%;
         min-height: 80vh;

@@ -9,7 +9,7 @@
 
             $response = Http::get($url)->json();
 
-            if ($response['status'] == 'OK') {
+            if (isset($response['status']) && $response['status'] == 'OK') {
                 return [
                     'lat' => $response['results'][0]['geometry']['location']['lat'],
                     'lng' => $response['results'][0]['geometry']['location']['lng'],

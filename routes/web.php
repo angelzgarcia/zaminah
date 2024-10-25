@@ -6,22 +6,96 @@ use App\Http\Controllers\Admin\AdminReviewController;
 use App\Http\Controllers\Admin\AdminStateController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminZoneController;
+use App\Http\Controllers\User\UserProfileController;
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\Admin\AdminHomeController;
+use App\Http\Controllers\Auth\GoogleAuthController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\User\UserCultureController;
 use App\Http\Controllers\User\UserHomeController;
-
+use App\Http\Controllers\User\UserLoginController;
+use App\Http\Controllers\User\UserStateController;
+use App\Http\Controllers\User\UserZoneController;
 
 /*______________________ RUTAS   PARA    USUARIOS ____________________*/
 
-// RUTA RAIZ
-Route::get('/',  [UserHomeController::class, 'index']) -> name('home');
+// RUTAS PARA EL INDEX
+Route::controller(UserHomeController::class) -> prefix('/') -> group(function() {
+    Route::get('', 'index') -> name('home');
+});
+
+// RUTAS PARA VISTAS DE ZONAS
+Route::controller(UserZoneController::class) -> prefix('zonas') -> group(function() {
+    Route::get('', 'index') -> name('user.zonas.index');
+    Route::get('{zona}', 'show') -> name('user.zonas.show');
+});
+
+// RUTAS PARA VISTAS DE ESTADOS DE LA REPUBLICA
+Route::controller(UserStateController::class) -> prefix('estados') -> group(function() {
+    Route::get('', 'index') -> name('user.estados.index');
+});
+
+// RUTAS PARA VISTAS DE CULTURAS
+Route::controller(UserCultureController::class) -> prefix('culturas') -> group(function() {
+    Route::get('', 'index') -> name('user.culturas.index');
+});
+
+// RUTAS PARA EL PERFIL
+Route::controller(UserProfileController::class) -> prefix('profile') -> group(function() {
+    Route::get('', 'index') -> name('user.profile.inedx');
+});
+
+
+
+
+
+/* _____________________ RUTAS   PARA    AUTH __________________*/
+
+// AUTH LOGIN
+Route::get('login', [LoginController::class, 'index']) -> name('login');
+
+// AUTH GOOGLE
+Route::get('auth/google', [GoogleAuthController::class, 'redirect']) -> name('google-auth');
+Route::get('auth/google/call-back', [GoogleAuthController::class, 'callbackGoogle']);
 
 
 
 
 
 /* _____________________ RUTAS   PARA    ADMINISTRADORES __________________*/
+
+// RUTAS PARA REGISTROS DE CULTURAS
+// Route::controller(AdminCultureController::class) -> prefix('admin/cultures') -> group(function() {
+//     Route::get('', 'index') -> name('admin.culturas.index');
+//     Route::get('create', 'create') -> name('admin.culturas.create');
+//     Route::post('', 'store') -> name('admin.culturas.store');
+//     Route::get('{culture}', 'show') -> name('admin.culturas.show');
+//     Route::get('{culture}/edit', 'edit') -> name('admin.culturas.edit');
+//     Route::put('{culture}', 'update') -> name('admin.culturas.update');
+//     Route::delete('{culture}', 'destroy') -> name('admin.culturas.destroy');
+// });
+
+// RUTAS PARA REGISTROS DE ESTADOS
+// Route::controller(AdminStateController::class) -> prefix('admin/states') -> group(function() {
+//     Route::get('', 'index') -> name('admin.estados.index');
+//     Route::get('create', 'create') -> name('admin.estados.create');
+//     Route::post('', 'store') -> name('admin.estados.store');
+//     Route::get('{state}', 'show') -> name('admin.estados.show');
+//     Route::get('{state}/edit', 'edit') -> name('admin.estados.edit');
+//     Route::put('{state}', 'update') -> name('admin.estados.update');
+//     Route::delete('{state}', 'destroy') -> name('admin.estados.destroy');
+// });
+
+// RUTAS PARA REGISTROS DE ZONAS
+// Route::controller(AdminZoneController::class) -> prefix('admin/zones') -> group(function() {
+//     Route::get('', 'index') -> name('admin.zonas.index');
+//     Route::get('create', 'create') -> name('admin.zonas.create');
+//     Route::post('', 'store') -> name('admin.zonas.store');
+//     Route::get('{zone}', 'show') -> name('admin.zonas.show');
+//     Route::get('{zone}/edit', 'edit') -> name('admin.zonas.edit');
+//     Route::put('{zone}', 'update') -> name('admin.zonas.update');
+//     Route::delete('{zone}', 'destroy') -> name('admin.zonas.destroy');
+// });
 
 // RUTAS PARA DASHBOARD ADMIN
 Route::controller(AdminHomeController::class) -> prefix('admin')->group(function () {
@@ -45,37 +119,21 @@ Route::controller(AdminAccountVerifyController::class) -> prefix('verify-admin-a
 });
 
 // RUTAS PARA REGISTROS DE CULTURAS
-Route::controller(AdminCultureController::class) -> prefix('admin/cultures') -> group(function() {
-    Route::get('', 'index') -> name('admin.culturas.index');
-    Route::get('create', 'create') -> name('admin.culturas.create');
-    Route::post('', 'store') -> name('admin.culturas.store');
-    Route::get('{culture}', 'show') -> name('admin.culturas.show');
-    Route::get('{culture}/edit', 'edit') -> name('admin.culturas.edit');
-    Route::put('{culture}', 'update') -> name('admin.culturas.update');
-    Route::delete('{culture}', 'destroy') -> name('admin.culturas.destroy');
-});
+Route::resource('admin/culturas', AdminCultureController::class)
+        -> parameters(['culturas' => 'culture'])
+        -> names('admin.culturas');
+
 
 // RUTAS PARA REGISTROS DE ESTADOS
-Route::controller(AdminStateController::class) -> prefix('admin/states') -> group(function() {
-    Route::get('', 'index') -> name('admin.estados.index');
-    Route::get('create', 'create') -> name('admin.estados.create');
-    Route::post('', 'store') -> name('admin.estados.store');
-    Route::get('{state}', 'show') -> name('admin.estados.show');
-    Route::get('{state}/edit', 'edit') -> name('admin.estados.edit');
-    Route::put('{state}', 'update') -> name('admin.estados.update');
-    Route::delete('{state}', 'destroy') -> name('admin.estados.destroy');
-});
+Route::resource('admin/estados', AdminStateController::class)
+        -> parameters(['estados' => 'state'])
+        -> names('admin.estados');
 
 // RUTAS PARA REGISTROS DE ZONAS
-Route::controller(AdminZoneController::class) -> prefix('admin/zones') -> group(function() {
-    Route::get('', 'index') -> name('admin.zonas.index');
-    Route::get('create', 'create') -> name('admin.zonas.create');
-    Route::post('', 'store') -> name('admin.zonas.store');
-    Route::get('{zone}', 'show') -> name('admin.zonas.show');
-    Route::get('{zone}/edit', 'edit') -> name('admin.zonas.edit');
-    Route::put('{zone}', 'update') -> name('admin.zonas.update');
-    Route::delete('{zone}', 'destroy') -> name('admin.zonas.destroy');
-});
+Route::resource('admin/zonas', AdminZoneController::class)
+        -> parameters(['zonas' => 'zone'])
+        -> names('admin.zonas');
+
 
 // RUTAS PARA REGISTROS DE USUARIOS
 Route::controller(AdminUserController::class) -> prefix('admin/users')-> group(function () {
