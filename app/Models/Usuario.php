@@ -18,7 +18,7 @@ class Usuario extends Authenticatable
     public function rol() {
         return $this -> belongsTo(Rol::class, 'idRol', 'idRol');
     }
-
+ 
     public function resenias() {
         return $this -> hasMany(Resenia::class, 'idUsuario', 'idUsuario');
     }
